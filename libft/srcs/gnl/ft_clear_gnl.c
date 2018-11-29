@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_clear_gnl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/19 10:48:40 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/29 13:45:33 by wbraeckm         ###   ########.fr       */
+/*   Created: 2018/11/29 13:44:16 by wbraeckm          #+#    #+#             */
+/*   Updated: 2018/11/29 13:44:57 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "libft.h"
-# include <unistd.h>
-
-# define BUFF_SIZE 512
-
-typedef struct s_line	t_line;
-struct		s_line
+void	ft_clear_gnl(int fd)
 {
-	int		fd;
 	char	*str;
-	size_t	size;
-	size_t	remaining;
-};
 
-int			get_next_line(const int fd, char **line);
-void		ft_clear_gnl(int fd);
-
-#endif
+	while (get_next_line(fd, &str) > 0)
+		free(str);
+}
