@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 11:04:28 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/29 13:43:55 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/29 15:30:52 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ char	*ft_strtrijoin(char *a, char *b, char *c);
 char	*ft_strsrepl(char *str, char *match, char *replacement);
 char	*ft_strsreplall(char *str, char *match, char *replacement);
 void	ft_freesplit(char **split);
+size_t	ft_strcountchar(char *str, char c);
 
 #endif
