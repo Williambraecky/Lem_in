@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/29 17:46:10 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/30 18:45:54 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void	parse_tubes(t_lem *lem, char *str)
 	{
 		if (!is_valid_conn_format(str))
 			break ;
-		add_tube(lem, str);
+		if (*str != '#')
+			add_tube(lem, str);
 		ft_strdel(&str);
 	}
 	if (str)

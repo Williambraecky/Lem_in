@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/30 18:35:18 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/30 18:46:57 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ int		main(int argc, char **argv)
 	i = 0;
 	while (lem.paths && lem.paths[i])
 		print_path(&lem, lem.paths[i++]);
-	ft_printf("%d\n", calc_max_output(&lem));
 	if (lem.rooms)
-		free(lem.rooms);
+		ft_memdel((void**)&lem.rooms);
 	if (lem.paths)
-		free(lem.paths);
+		ft_memdel((void**)&lem.paths);
 	ft_printf("End\n");
 	(void)argc;
 	(void)argv;

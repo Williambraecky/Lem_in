@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algo.c                                             :+:      :+:    :+:   */
+/*   path_finding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 18:21:20 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/30 18:39:24 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/30 18:50:20 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@
 static int	should_continue(t_lem *lem, t_list *list)
 {
 	(void)list;
-	if (lem->paths && calc_max_output(lem) >= lem->max_throughput)
+	if (!lem->paths)
+		return (1);
+	if (lem->paths[0][0] == lem->start && lem->paths[0][1] == lem->end)
+		return (0);
+	if (calc_max_output(lem) >= lem->max_throughput)
 		return (0);
 	return (1);
 }

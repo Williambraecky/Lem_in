@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:15:56 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/30 15:01:58 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/30 18:46:15 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int		is_valid_conn_format(char *str)
 {
 	char	*tmp;
 
+	if (*str == '#')
+		return (1);
 	if (ft_strcountchar(str, '-') != 1)
 		return (0);
 	tmp = ft_strchr(str, '-');
