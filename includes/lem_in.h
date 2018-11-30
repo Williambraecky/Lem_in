@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/29 17:21:09 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/30 18:29:43 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,15 @@ struct		s_lem
 	t_room	*rooms;
 	t_paths	*paths;
 	int		ant_count;
+	int		max_throughput;
 	int		start;
 	int		end;
 };
+
+/*
+** Algo
+*/
+void		find_smallest_paths(t_lem *lem);
 
 /*
 ** Parse
@@ -61,6 +67,18 @@ size_t		room_connlen(t_room *room);
 int			is_valid_room_format(char *str);
 int			is_valid_conn_format(char *str);
 int			lem_is_valid(t_lem *lem);
+size_t		lem_pathlen(t_lem *lem);
+size_t		path_len(t_paths path);
+t_paths		path_add(t_lem *lem, t_paths path, int index);
+int			path_passes_through(t_paths path, int room_index);
+void		del_path(void *elem, size_t content_size);
+int			room_conn_contains(t_room *room, int id);
+void		lem_path_add(t_lem *lem, t_paths paths);
+t_paths		new_path(t_lem *lem, int start_index);
+t_paths		path_dup(t_paths path);
+void		print_path(t_lem *lem, t_paths path);
+int			calc_max_output(t_lem *lem);
+int			path_collide(t_paths path1, t_paths path2);
 
 /*
 ** Free

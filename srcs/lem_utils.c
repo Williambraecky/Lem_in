@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/29 17:46:25 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/30 17:24:05 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ t_room	*lem_get_room_name(t_lem *lem, char *str)
 	return (NULL);
 }
 
+/*
+** TODO: Handle rooms room with same x y or name is already present
+*/
+
 void	lem_add_room(t_lem *lem, t_room room)
 {
 	t_room	*new;
@@ -53,13 +57,28 @@ void	lem_add_room(t_lem *lem, t_room room)
 	len = lem_roomlen(lem);
 	if (!(new = (t_room*)ft_memalloc(sizeof(*(lem->rooms)) * (len + 2))))
 		error_exit(lem);
-	if (lem->rooms)
-		ft_memcpy(new, lem->rooms, sizeof(*(lem->rooms)) * (len + 1));
 	if (room.flag == LEM_START)
 		lem->start = room.index;
 	else if (room.flag == LEM_END)
 		lem->end = room.index;
 	new[len] = room;
+	while (len--)
+		new[len] = lem->rooms[len];
 	free(lem->rooms);
 	lem->rooms = new;
+}
+
+void	lem_path_add(t_lem *lem, t_paths paths)
+{
+	t_paths	*new;
+	size_t	len;
+
+	len = lem_pathlen(lem);
+	if (!(new = (t_paths*)ft_memalloc(sizeof(*new) * (len + 2))))
+		error_exit(lem);
+	new[len] = paths;
+	while (len--)
+		new[len] = lem->paths[len];
+	free(lem->paths);
+	lem->paths = new;
 }

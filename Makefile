@@ -6,7 +6,7 @@
 #    By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/25 13:02:54 by wbraeckm          #+#    #+#              #
-#    Updated: 2018/11/29 13:49:27 by wbraeckm         ###   ########.fr        #
+#    Updated: 2018/11/30 15:33:00 by wbraeckm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ $(NAME): $(OBJSUBS) $(OBJ)
 	@printf $(cccyan)
 	@printf "Compiling $(NAME) "
 	@$(CC) $(FLAGS) -o $(NAME) $(OBJ) -I$(INCLUDES) \
--I$(LIBINCLUDES) $(LIBFT)
+-I$(LIBINCLUDES) $(LIBFT) -fsanitize=address
 	@printf $(cclightgray)[$(ccgreenhard)√$(cclightgray)]$(ccreset)
 	@printf "                                                     \n"
 

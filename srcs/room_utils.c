@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:15:56 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/29 17:50:24 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/30 15:01:58 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,32 @@ size_t	room_connlen(t_room *room)
 	return (i);
 }
 
+int		room_conn_contains(t_room *room, int id)
+{
+	size_t	len;
+
+	len = room_connlen(room);
+	if (!room->connections)
+		return (0);
+	while (room->connections[len])
+		if (room->connections[len--] == id)
+			return (1);
+	return (0);
+}
+
 void	room_add_connections(t_lem *lem, t_room *room, int id)
 {
 	int		*new;
 	size_t	len;
 
+	if (room_conn_contains(room, id))
+		return ;
 	len = room_connlen(room);
 	if (!(new = (int*)ft_memalloc(sizeof(*new) * (len + 2))))
 		error_exit(lem);
-	if (room->connections)
-		ft_memcpy(new, room->connections, sizeof(*new) * len);
 	new[len] = id;
+	while (len--)
+		new[len] = room->connections[len];
 	free(room->connections);
 	room->connections = new;
 }

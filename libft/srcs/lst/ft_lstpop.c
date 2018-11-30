@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algo.c                                             :+:      :+:    :+:   */
+/*   ft_lstpop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/29 18:21:20 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/29 18:25:25 by wbraeckm         ###   ########.fr       */
+/*   Created: 2018/11/30 15:09:06 by wbraeckm          #+#    #+#             */
+/*   Updated: 2018/11/30 15:10:56 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-void	find_smallest_paths(t_lem *lem)
+void	ft_lstpop(t_list **list, void (*del)(void *, size_t))
 {
-	t_list	*list;
+	t_list	*tmp;
 
-	list = NULL;
+	if (!list || !*list)
+		return ;
+	tmp = *list;
+	*list = (*list)->next;
+	del(tmp->content, tmp->content_size);
+	free(tmp);
 }
