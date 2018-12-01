@@ -6,7 +6,7 @@
 #    By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/25 13:02:54 by wbraeckm          #+#    #+#              #
-#    Updated: 2018/11/30 15:33:00 by wbraeckm         ###   ########.fr        #
+#    Updated: 2018/12/01 01:48:55 by wbraeckm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ cclightgray = "\033[0;37m"
 
 all: lib $(NAME)
 
-$(OBJFOLDER)/%.o:$(SRCSFOLDER)/%.c
+$(OBJFOLDER)/%.o:$(SRCSFOLDER)/%.c includes/lem_in.h
 	@printf $(ccblue)
 	@printf "Compiling %-$(LONGEST)s" $(notdir $<)
 	@$(CC) $(FLAGS) -o $@ -c $< -I$(INCLUDES) -I$(LIBINCLUDES)
@@ -51,11 +51,11 @@ $(OBJSUBS):
 lib:
 	@make -C $(LIBFOLDER)
 
-$(NAME): $(OBJSUBS) $(OBJ)
+$(NAME): $(OBJSUBS) $(OBJ) Makefile
 	@printf $(cccyan)
 	@printf "Compiling $(NAME) "
 	@$(CC) $(FLAGS) -o $(NAME) $(OBJ) -I$(INCLUDES) \
--I$(LIBINCLUDES) $(LIBFT) -fsanitize=address
+-I$(LIBINCLUDES) $(LIBFT)
 	@printf $(cclightgray)[$(ccgreenhard)√$(cclightgray)]$(ccreset)
 	@printf "                                                     \n"
 

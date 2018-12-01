@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/30 18:29:43 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/01 00:06:09 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ struct		s_lem
 	t_paths	*paths;
 	int		ant_count;
 	int		max_throughput;
+	int		current_max_throughput;
 	int		start;
 	int		end;
 };

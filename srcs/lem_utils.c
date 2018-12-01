@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/30 17:24:05 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/01 01:36:08 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ size_t	lem_roomlen(t_lem *lem)
 
 t_room	*lem_get_room_id(t_lem *lem, int id)
 {
-	if ((size_t)id >= lem_roomlen(lem))
+	if ((size_t)id > lem_roomlen(lem))
 		return (NULL);
-	return (&lem->rooms[id - 1]);
+	return (&(lem->rooms[id - 1]));
 }
 
 t_room	*lem_get_room_name(t_lem *lem, char *str)

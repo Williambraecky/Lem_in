@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/30 18:45:54 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/30 20:09:41 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	add_tube(t_lem *lem, char *str)
 	room2 = lem_get_room_name(lem, tmp + 1);
 	if (room1 == NULL || room2 == NULL)
 	{
-		ft_printf("TEST\n");
 		ft_strdel(&str);
 		error_exit(lem);
 	}

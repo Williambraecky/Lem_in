@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:15:56 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/30 18:46:15 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/01 01:24:22 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ size_t	room_connlen(t_room *room)
 
 int		room_conn_contains(t_room *room, int id)
 {
-	size_t	len;
+	size_t	i;
 
-	len = room_connlen(room);
 	if (!room->connections)
 		return (0);
-	while (room->connections[len])
-		if (room->connections[len--] == id)
+	i = 0;
+	while (room->connections[i])
+		if (room->connections[i++] == id)
 			return (1);
 	return (0);
 }

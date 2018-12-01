@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstpushfront.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/19 10:48:40 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/01 00:05:20 by wbraeckm         ###   ########.fr       */
+/*   Created: 2018/12/01 01:09:16 by wbraeckm          #+#    #+#             */
+/*   Updated: 2018/12/01 01:10:39 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "libft.h"
-# include <unistd.h>
-
-# define BUFF_SIZE 128
-
-typedef struct s_line	t_line;
-struct		s_line
+void	ft_lstpushfront(t_list **alst, const void *content, size_t content_size)
 {
-	int		fd;
-	char	*str;
-	size_t	size;
-	size_t	remaining;
-};
+	t_list	*new;
 
-int			get_next_line(const int fd, char **line);
-void		ft_clear_gnl(int fd);
-
-#endif
+	if (!(new = ft_lstnew(content, content_size)))
+		return ;
+	new->next = *alst;
+	*alst = new;
+}
