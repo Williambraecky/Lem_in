@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/02 02:08:13 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:22:57 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define LEM_START 1
 # define LEM_END 2
+# define LEM_BUFFER_SIZE 4096
 
 typedef int*	t_paths;
 
@@ -48,16 +49,19 @@ struct		s_lem
 /*
 ** Algo
 */
+
 void		find_smallest_paths(t_lem *lem);
 
 /*
 ** Parse
 */
+
 void		parse_lemin(t_lem *lem);
 
 /*
 ** Utils
 */
+
 void		error_exit(t_lem *lem);
 void		lem_add_room(t_lem *lem, t_room room);
 size_t		lem_roomlen(t_lem *lem);
@@ -84,7 +88,17 @@ int			path_collide(t_paths path1, t_paths path2);
 /*
 ** Free
 */
+
 void		free_rooms(t_lem *lem);
 void		free_paths(t_lem *lem);
+
+/*
+** Buffer
+*/
+
+void	buffer_flush(void);
+void	buffer_putchar(char c);
+void	buffer_putstr(char *str);
+void	buffer_putnbr(int i);
 
 #endif
