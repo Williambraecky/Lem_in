@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/03 20:34:53 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:57:07 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ struct		s_room
 	int		x;
 	int		y;
 	int		flag;
+	int		ant;
 	int		*connections;
 };
 
@@ -84,6 +85,7 @@ t_paths		path_dup(t_paths path);
 void		print_path(t_lem *lem, t_paths path);
 int			calc_max_output(t_lem *lem);
 int			path_collide(t_paths path1, t_paths path2);
+void		move_ant(t_room *from, t_room *to);
 
 /*
 ** Free

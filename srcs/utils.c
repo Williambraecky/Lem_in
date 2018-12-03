@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:43:10 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/30 18:08:43 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/03 21:16:55 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int		lem_is_valid(t_lem *lem)
 {
+	if (!lem->rooms)
+		return (0);
 	if (lem->start == 0 || lem->end == 0 || lem->ant_count <= 0)
 		return (0);
 	if (room_connlen(lem_get_room_id(lem, lem->start)) == 0)
@@ -41,6 +43,34 @@ t_paths	path_dup(t_paths path)
 	while (len--)
 		new[len] = path[len];
 	return (new);
+}
+
+void	move_ant(t_room *from, t_room *to)
+{
+	if (from->flag == LEM_START)
+		from->ant++;
+	buffer_putchar('L');
+	buffer_putnbr(from->ant);
+	buffer_putchar('-');
+	buffer_putstr(to->name);
+	buffer_putchar(' ');
+	if (from->flag == LEM_START)
+	{
+		if (to->flag == LEM_END)
+			to->ant++;
+		else
+			to->ant = from->ant;
+	}
+	else if (to->flag == LEM_END)
+	{
+		to->ant++;
+		from->ant = 0;
+	}
+	else
+	{
+		to->ant = from->ant;
+		from->ant = 0;
+	}
 }
 
 void	print_path(t_lem *lem, t_paths path)

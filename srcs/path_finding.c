@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 18:21:20 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/03 20:23:27 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:43:38 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		find_smallest_paths(t_lem *lem)
 			&lem->rooms[current[path_len(current) - 1] - 1]);
 		ft_lstpop(&current_paths, del_path);
 	}
-	ft_printf("null? %d max %d\n", current_paths == NULL, lem->current_max_throughput);
+	//ft_printf("null? %d max %d\n", current_paths == NULL, lem->current_max_throughput);
 	if (current_paths != NULL)
 		ft_lstdel(&current_paths, del_path);
 }

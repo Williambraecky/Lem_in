@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/03 20:45:30 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/03 21:05:42 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static void	add_room(t_lem *lem, char *str, int flag, int index)
 	room.x = ft_atoi(split[1]);
 	room.y = ft_atoi(split[2]);
 	room.flag = flag;
+	room.ant = 0;
 	room.connections = NULL;
 	ft_strdel(&split[1]);
 	ft_strdel(&split[2]);
