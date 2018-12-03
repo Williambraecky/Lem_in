@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/30 20:09:41 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:45:30 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	parse_tubes(t_lem *lem, char *str)
 {
 	int	ret;
 
+	buffer_putendl(str);
 	if (!str || !is_valid_conn_format(str))
 		error_exit(lem);
 	add_tube(lem, str);
@@ -44,12 +45,18 @@ static void	parse_tubes(t_lem *lem, char *str)
 	{
 		if (!is_valid_conn_format(str))
 			break ;
+		buffer_putendl(str);
 		if (*str != '#')
 			add_tube(lem, str);
 		ft_strdel(&str);
 	}
 	if (str)
 		ft_strdel(&str);
+	while ((ret = get_next_line(0, &str)) > 0)
+	{
+		buffer_putendl(str);
+		ft_strdel(&str);
+	}
 }
 
 static void	add_room(t_lem *lem, char *str, int flag, int index)
@@ -65,10 +72,10 @@ static void	add_room(t_lem *lem, char *str, int flag, int index)
 	room.y = ft_atoi(split[2]);
 	room.flag = flag;
 	room.connections = NULL;
-	lem_add_room(lem, room);
 	ft_strdel(&split[1]);
 	ft_strdel(&split[2]);
 	ft_memdel((void**)&split);
+	lem_add_room(lem, room);
 }
 
 static void	parse_rooms(t_lem *lem)
@@ -84,6 +91,7 @@ static void	parse_rooms(t_lem *lem)
 	{
 		if (!is_valid_room_format(str))
 			break ;
+		buffer_putendl(str);
 		if (ft_strequ(str, "##start"))
 			flag = LEM_START;
 		else if (ft_strequ(str, "##end"))
@@ -107,6 +115,7 @@ void		parse_lemin(t_lem *lem)
 	if (get_next_line(0, &str) != 1 || !ft_strisnumber(str))
 		error_exit(NULL);
 	lem->ant_count = ft_atoi(str);
+	buffer_putendl(str);
 	ft_strdel(&str);
 	parse_rooms(lem);
 }

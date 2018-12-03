@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/03 20:23:13 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:47:34 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int		main(int argc, char **argv)
 {
 	t_lem	lem;
-	size_t	i;
 
 	if (argc != 1)
 		error_exit(NULL);
@@ -23,10 +22,11 @@ int		main(int argc, char **argv)
 	parse_lemin(&lem);
 	if (!lem_is_valid(&lem))
 		error_exit(&lem);
+	buffer_putchar('\n');
 	lem.max_throughput = ft_min(room_connlen(&lem.rooms[lem.start - 1]),
 								room_connlen(&lem.rooms[lem.end - 1]));
+	buffer_flush();
 	find_smallest_paths(&lem);
-	i = 0;
 	if (lem.rooms)
 		free_rooms(&lem);
 	if (lem.paths)

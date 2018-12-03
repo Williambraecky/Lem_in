@@ -6,14 +6,14 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:18:43 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/03 20:22:11 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:34:46 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 char	g_buffer[LEM_BUFFER_SIZE];
-int		g_len;
+int		g_len = 0;
 
 void	buffer_flush(void)
 {
@@ -30,8 +30,16 @@ void	buffer_putchar(char c)
 
 void	buffer_putstr(char *str)
 {
+	if (!str)
+		return ;
 	while (*str)
 		buffer_putchar(*str++);
+}
+
+void	buffer_putendl(char *str)
+{
+	buffer_putstr(str);
+	buffer_putchar('\n');
 }
 
 /*

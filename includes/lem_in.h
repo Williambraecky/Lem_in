@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/03 20:22:57 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:34:53 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void		free_paths(t_lem *lem);
 void	buffer_flush(void);
 void	buffer_putchar(char c);
 void	buffer_putstr(char *str);
+void	buffer_putendl(char *str);
 void	buffer_putnbr(int i);
 
 #endif
