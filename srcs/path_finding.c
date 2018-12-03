@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 18:21:20 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/02 02:08:19 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:23:27 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,39 +31,6 @@ static int	should_continue(t_lem *lem, t_list *list)
 		return (0);
 	return (1);
 }
-//
-// static int	should_add(t_list *list, t_paths path, int room_index)
-// {
-// 	t_paths	current;
-//
-// 	if (path_passes_through(path, room_index))
-// 		return (0);
-// 	while (list)
-// 	{
-// 		current = (t_paths)*((void**)list->content);
-// 		if (current[path_len(current) - 1] == room_index)
-// 			return (0);
-// 		list = list->next;
-// 	}
-// 	return (1);
-// }
-
-// static void	process_path(t_lem *lem, t_list *elem)
-// {
-// 	t_paths	path;
-//
-// 	path = (t_paths)*((void**)elem->content);
-// 	if (path[path_len(path) - 1] == lem->end)
-// 	{
-// 		if (!(path = path_dup(path)))
-// 		{
-// 			ft_lstdel(&elem, del_path);
-// 			error_exit(lem);
-// 		}
-// 		lem_path_add(lem, path);
-// 		lem->current_max_throughput = calc_max_output(lem);
-// 	}
-// }
 
 static void	process_path(t_lem *lem, t_list **list, t_paths path)
 {
@@ -100,19 +67,16 @@ static void	add_new_paths(t_lem *lem, t_list **list, t_paths path, t_room *room)
 
 	if (room->index == lem->end)
 		return ;
+	if (room_conn_contains(room, lem->end))
+		process_path(lem, list, path);
 	conn_len = room_connlen(room);
 	i = 0;
 	while (i < conn_len)
 	{
-		if ((room_connlen(&lem->rooms[room->connections[i] - 1]) > 1 ||
-			room->connections[i] == lem->end) &&
+		if (room->connections[i] != lem->end &&
+			room_connlen(&lem->rooms[room->connections[i] - 1]) > 1 &&
 			!path_passes_through(path, room->connections[i]))
-		{
-			if (room->connections[i] == lem->end)
-				process_path(lem, list, path);
-			else
 				add_new_path(lem, list, path, room->connections[i]);
-		}
 		i++;
 	}
 }
