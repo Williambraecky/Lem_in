@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:51:39 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/29 15:18:32 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:25:39 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	error_exit(t_lem *lem)
 {
 	ft_clear_gnl(0);
+	buffer_flush();
 	ft_printf("ERROR\n");
 	if (lem && lem->rooms)
 		free_rooms(lem);
