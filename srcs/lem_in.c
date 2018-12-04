@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/04 17:25:09 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/04 18:40:06 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@ void	move_ants(t_lem *lem, t_paths path)
 	}
 }
 
-int		main(int argc, char **argv)
+int		main(int argc __attribute__((unused)), char **argv)
 {
 	t_lem	lem;
+	size_t	i;
 
+	(void)argv;
 	if (argc != 1)
 		error_exit(NULL);
 	ft_memset(&lem, 0, sizeof(lem));
@@ -54,7 +56,7 @@ int		main(int argc, char **argv)
 								room_connlen(&lem.rooms[lem.end - 1]));
 	buffer_flush();
 	find_smallest_paths(&lem);
-	size_t	i = 0;
+	i = 0;
 	while (lem.paths && lem.paths[i])
 		print_path(&lem, lem.paths[i++]);
 	//move_ants(&lem, lem.paths[0]);
@@ -63,7 +65,5 @@ int		main(int argc, char **argv)
 	if (lem.paths)
 		free_paths(&lem);
 	buffer_flush();
-	(void)argc;
-	(void)argv;
 	return (0);
 }
