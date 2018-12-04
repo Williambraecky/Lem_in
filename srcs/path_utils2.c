@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:16:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/01 01:55:16 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/04 11:46:13 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	current_size(t_paths *paths)
 	return (i);
 }
 
-static void add_to_paths(t_paths *paths, t_paths path)
+static void	add_to_paths(t_paths *paths, t_paths path)
 {
 	size_t	i;
 

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/03 20:57:07 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/04 18:25:32 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define LEM_START 1
 # define LEM_END 2
-# define LEM_BUFFER_SIZE 4096
+# define LEM_BUFFER_SIZE 1024
 
 typedef int*	t_paths;
 
@@ -75,7 +75,7 @@ int			is_valid_conn_format(char *str);
 int			lem_is_valid(t_lem *lem);
 size_t		lem_pathlen(t_lem *lem);
 size_t		path_len(t_paths path);
-t_paths		path_add(t_lem *lem, t_paths path, int index);
+t_paths		path_add(t_paths path, int index);
 int			path_passes_through(t_paths path, int room_index);
 void		del_path(void *elem, size_t content_size);
 int			room_conn_contains(t_room *room, int id);
@@ -98,10 +98,10 @@ void		free_paths(t_lem *lem);
 ** Buffer
 */
 
-void	buffer_flush(void);
-void	buffer_putchar(char c);
-void	buffer_putstr(char *str);
-void	buffer_putendl(char *str);
-void	buffer_putnbr(int i);
+void		buffer_flush(void);
+void		buffer_putchar(char c);
+void		buffer_putstr(char *str);
+void		buffer_putendl(char *str);
+void		buffer_putnbr(int i);
 
 #endif

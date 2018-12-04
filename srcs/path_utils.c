@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 14:32:50 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/04 12:48:42 by jfinet           ###   ########.fr       */
+/*   Updated: 2018/12/04 18:25:33 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_paths	new_path(t_lem *lem, int start_index)
 	return (new);
 }
 
-t_paths	path_add(t_lem *lem, t_paths path, int room_index)
+t_paths	path_add(t_paths path, int room_index)
 {
 	t_paths	new;
 	size_t	pathlen;
