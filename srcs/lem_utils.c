@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/01 01:36:08 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/04 18:34:06 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,17 @@ void	lem_add_room(t_lem *lem, t_room room)
 	lem->rooms = new;
 }
 
-void	lem_path_add(t_lem *lem, t_paths paths)
+void	lem_path_add(t_lem *lem, t_paths paths, t_list **list)
 {
 	t_paths	*new;
 	size_t	len;
 
 	len = lem_pathlen(lem);
 	if (!(new = (t_paths*)ft_memalloc(sizeof(*new) * (len + 2))))
+	{
+		ft_lstdel(list, del_path);
 		error_exit(lem);
+	}
 	new[len] = paths;
 	while (len--)
 		new[len] = lem->paths[len];

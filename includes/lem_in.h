@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/04 18:29:15 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/04 18:33:50 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_paths		path_add(t_paths path, int index);
 int			path_passes_through(t_paths path, int room_index);
 void		del_path(void *elem, size_t content_size);
 int			room_conn_contains(t_room *room, int id);
-void		lem_path_add(t_lem *lem, t_paths paths);
+void		lem_path_add(t_lem *lem, t_paths paths, t_list **list);
 t_paths		new_path(t_lem *lem, int start_index);
 t_paths		path_dup(t_paths path);
 void		print_path(t_lem *lem, t_paths path);
