@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/04 18:25:32 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/04 18:29:15 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define LEM_START 1
 # define LEM_END 2
-# define LEM_BUFFER_SIZE 1024
+# define LEM_BUFFER_SIZE 4096
 
 typedef int*	t_paths;
 

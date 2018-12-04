@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 18:21:20 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/04 15:14:52 by jfinet           ###   ########.fr       */
+/*   Updated: 2018/12/04 18:28:14 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	process_path(t_lem *lem, t_list **list, t_paths path)
 {
 	t_paths	new;
 
-	if (!(new = path_add(lem, path, lem->end)))
+	if (!(new = path_add(path, lem->end)))
 	{
 		ft_lstdel(list, del_path);
 		error_exit(lem);
@@ -45,13 +45,17 @@ static void	process_path(t_lem *lem, t_list **list, t_paths path)
 	lem->current_max_throughput = calc_max_output(lem);
 }
 
-static void add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
+static void	add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 {
 	size_t	lstlen;
 	t_paths	new;
 
 	lstlen = ft_lstlen(*list);
-	new = path_add(lem, path, index);
+	if (!(new = path_add(path, index)))
+	{
+		ft_lstdel(list, del_path);
+		error_exit(lem);
+	}
 	ft_lstpushback(list, &new, sizeof(t_paths));
 	if (lstlen == ft_lstlen(*list))
 	{
@@ -62,17 +66,19 @@ static void add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 
 static void	add_new_paths(t_lem *lem, t_list **list, t_paths path, t_room *room)
 {
-	size_t	conn_len;
 	size_t	i;
 
 	if (room_conn_contains(room, lem->end))
+	{
 		process_path(lem, list, path);
+		return ;
+	}
 	i = 0;
 	while (room->connections[i])
 	{
 		if (room->connections[i] != lem->end
 		&& room_connlen(&lem->rooms[room->connections[i] - 1]) > 1
-	   	&& !path_passes_through(path, room->connections[i]))
+		&& !path_passes_through(path, room->connections[i]))
 			add_new_path(lem, list, path, room->connections[i]);
 		i++;
 	}
@@ -92,13 +98,14 @@ void		find_smallest_paths(t_lem *lem)
 	while (should_continue(lem, current_paths))
 	{
 		current = (t_paths)*((void**)current_paths->content);
-		//ft_printf("%zu L : %d l : %zu m : %zu\n",
-		//	i++, lem_pathlen(lem), path_len(current), lem->current_max_throughput);
+		ft_printf("%zu L : %d l : %zu m : %zu\n",
+		i++, lem_pathlen(lem), path_len(current), lem->current_max_throughput);
 		add_new_paths(lem, &current_paths, current,
 			&lem->rooms[current[path_len(current) - 1] - 1]);
 		ft_lstpop(&current_paths, del_path);
 	}
-	//ft_printf("null? %d max %d\n", current_paths == NULL, lem->current_max_throughput);
+	ft_printf("null? %d max %d\n", current_paths == NULL,
+	lem->current_max_throughput);
 	if (current_paths != NULL)
 		ft_lstdel(&current_paths, del_path);
 }
