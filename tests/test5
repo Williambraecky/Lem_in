@@ -1,0 +1,28 @@
+8
+sam 12 6
+met 3 0
+met2 6 0
+met3 3 6
+met4 6 12
+##end
+met5 9 12
+##start
+div 0 6
+#####---------------------------------------#####
+#
+#       ___ MET - MET2____
+#     /                    \
+#   DIV                     SAM
+#     \_MET3 _ MET4 _ MET5 /  |
+#           \                /
+#             \ __________ /
+#
+#####---------------------------------------#####
+div-met
+met-met2
+met2-sam
+div-met3
+met3-met4
+met4-met5
+met5-sam
+met3-sam

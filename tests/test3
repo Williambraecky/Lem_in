@@ -1,0 +1,22 @@
+8
+##end
+sam 12 11
+met 1 6
+met2 5 12
+met3 7 12
+##start
+div 0 11
+#####------------------#####
+#
+#       ___ MET ___
+#     /             \
+#   DIV             SAM
+#    |               |
+#     \ MET2 - MET3 /
+#
+#####------------------#####
+div-met
+met-sam
+div-met2
+met2-met3
+met3-sam

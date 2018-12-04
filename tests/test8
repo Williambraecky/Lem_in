@@ -1,0 +1,59 @@
+10
+#rooms
+##start
+start 0 0
+##end
+end 25 20
+A0 4 11
+A1 10 9
+A2 12 10
+A3 14 11
+C1 6 12
+C2 8 13
+C3 10 14
+C4 12 15
+B0 6 7
+B1 8 8
+B2 14 7
+B3 16 8
+D0 8 4
+D1 10 5
+D2 12 6
+D3 18 4
+E0 10 0
+E1 12 1
+E2 14 2
+E3 16 3
+E4 20 1
+E5 23 8
+#tubes
+start-A0
+A0-C1
+A0-A1
+A1-B1
+A1-A2
+A2-A3
+A3-end
+C1-C2
+C2-C3
+C3-C4
+C4-end
+start-B0
+B0-B1
+B1-B2
+B2-D2
+B3-B2
+B3-end
+start-D0
+D0-D1
+D1-D2
+D2-D3
+D3-E3
+D3-end
+start-E0
+E0-E1
+E1-E2
+E2-E3
+E3-E4
+E4-E5
+E5-end
