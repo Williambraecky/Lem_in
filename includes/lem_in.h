@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/04 18:33:50 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/05 17:52:07 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,23 @@ struct		s_room
 	int		*connections;
 };
 
+typedef struct s_pathscombo	t_pathscombo;
+struct		s_pathscombo
+{
+	size_t	nb_paths;
+	t_paths	*paths;
+};
+
 typedef struct s_lem	t_lem;
 struct		s_lem
 {
 	t_room	*rooms;
 	t_paths	*paths;
+	t_list	*solutions;
+	t_pathscombo current_combo;
 	int		ant_count;
-	int		max_throughput;
-	int		current_max_throughput;
+	size_t	max_throughput;
+	size_t	current_max_throughput;
 	int		start;
 	int		end;
 };
@@ -86,6 +95,7 @@ void		print_path(t_lem *lem, t_paths path);
 int			calc_max_output(t_lem *lem);
 int			path_collide(t_paths path1, t_paths path2);
 void		move_ant(t_room *from, t_room *to);
+void		add_to_combo_list(t_lem *lem, t_paths path);
 
 /*
 ** Free
@@ -93,6 +103,7 @@ void		move_ant(t_room *from, t_room *to);
 
 void		free_rooms(t_lem *lem);
 void		free_paths(t_lem *lem);
+void		del_combo(void *elem, size_t content_size);
 
 /*
 ** Buffer

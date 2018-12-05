@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/04 18:40:06 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/05 18:11:13 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,14 @@ int		main(int argc __attribute__((unused)), char **argv)
 	buffer_flush();
 	find_smallest_paths(&lem);
 	i = 0;
-	while (lem.paths && lem.paths[i])
-		print_path(&lem, lem.paths[i++]);
+	ft_printf("%zu\n", ft_lstlen(lem.solutions));
+	// while (lem.paths && lem.current_combo.paths[i])
+	// 	print_path(&lem, lem.current_combo.paths[i++]);
 	//move_ants(&lem, lem.paths[0]);
 	if (lem.rooms)
 		free_rooms(&lem);
+	if (lem.solutions)
+		ft_lstdel(&lem.solutions, del_combo);
 	if (lem.paths)
 		free_paths(&lem);
 	buffer_flush();
