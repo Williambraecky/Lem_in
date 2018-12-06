@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/04 18:34:06 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 16:54:06 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ size_t	lem_roomlen(t_lem *lem)
 
 t_room	*lem_get_room_id(t_lem *lem, int id)
 {
-	if ((size_t)id > lem_roomlen(lem))
-		return (NULL);
 	return (&(lem->rooms[id - 1]));
 }
 
@@ -35,11 +33,22 @@ t_room	*lem_get_room_name(t_lem *lem, char *str)
 {
 	size_t	i;
 
+	if (lem->last_1 && ft_strcmp(lem->last_1->name, str) == 0)
+		return (lem->last_1);
+	else if (lem->last_2 && ft_strcmp(lem->last_2->name, str) == 0)
+		return (lem->last_2);
 	i = 0;
 	while (lem->rooms[i].name)
 	{
-		if (ft_strequ(lem->rooms[i].name, str))
+		if (str[0] == lem->rooms[i].name[0] &&
+			ft_strcmp(lem->rooms[i].name, str) == 0)
+		{
+			if (!lem->last_1 || lem->last_2 != &(lem->rooms[i]))
+				lem->last_1 = &lem->rooms[i];
+			else if (!lem->last_2 || lem->last_1 != &(lem->rooms[i]))
+				lem->last_2 = &lem->rooms[i];
 			return (&(lem->rooms[i]));
+		}
 		i++;
 	}
 	return (NULL);
@@ -47,6 +56,7 @@ t_room	*lem_get_room_name(t_lem *lem, char *str)
 
 /*
 ** TODO: Handle rooms room with same x y or name is already present
+** TODO: Malloc bigger space at start and keep indexing
 */
 
 void	lem_add_room(t_lem *lem, t_room room)

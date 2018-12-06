@@ -6,11 +6,31 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 17:19:11 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/05 18:13:27 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 16:16:35 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+size_t		compute_bandwidth(t_lem *lem, size_t nb_lines)
+{
+	size_t	bandwidth;
+	size_t	pathlen;
+	size_t	i;
+
+	if (!lem->solve)
+		return (0);
+	i = 0;
+	bandwidth = 0;
+	while (lem->solve[i])
+	{
+		pathlen = path_len(lem->solve[i]) - 1;
+		if (pathlen <= nb_lines)
+			bandwidth += (nb_lines - pathlen + 1);
+		i++;
+	}
+	return (bandwidth);
+}
 
 static int	path_is_compatible(t_pathscombo *combo, t_paths path)
 {
@@ -49,11 +69,7 @@ static void	add_to_combo(t_lem *lem, t_pathscombo *combo, t_paths path)
 	}
 	new_combo.paths[i] = path;
 	if (new_combo.nb_paths > lem->current_max_throughput)
-	{
 		lem->current_max_throughput = new_combo.nb_paths;
-		lem->current_combo = new_combo;
-		ft_printf("TEST %zu\n", lem->current_combo.nb_paths);
-	}
 	ft_lstpushback(&lem->solutions, &new_combo, sizeof(new_combo));
 }
 
@@ -81,8 +97,5 @@ void		add_to_combo_list(t_lem *lem, t_paths path)
 	fresh_combo.paths[0] = path;
 	ft_lstpushback(&lem->solutions, &fresh_combo, sizeof(fresh_combo));
 	if (fresh_combo.nb_paths > lem->current_max_throughput)
-	{
 		lem->current_max_throughput = fresh_combo.nb_paths;
-		lem->current_combo = fresh_combo;
-	}
 }

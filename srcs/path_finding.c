@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 18:21:20 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/05 18:13:08 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 17:23:10 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 static int	should_continue(t_lem *lem, t_list *list)
 {
+	size_t	lowest;
+
 	if (!list)
 		return (0);
 	if (!lem->paths)
@@ -28,6 +30,15 @@ static int	should_continue(t_lem *lem, t_list *list)
 	if (lem->paths[0][0] == lem->start && lem->paths[0][1] == lem->end)
 		return (0);
 	if (lem->current_max_throughput >= lem->max_throughput)
+		return (0);
+	if (lem->current_bandwidth >= lem->ant_count)
+		return (0);
+	lowest = path_len((t_paths)*(void**)list->content);
+	if (lowest > lem->current_lines &&
+		compute_bandwidth(lem, lowest) >= lem->ant_count)
+		return (0);
+	if (lowest - 1 +
+		lem->current_max_throughput > lem->ant_count)
 		return (0);
 	return (1);
 }
@@ -42,26 +53,27 @@ static void	process_path(t_lem *lem, t_list **list, t_paths path)
 		error_exit(lem);
 	}
 	lem_path_add(lem, new, list);
-	add_to_combo_list(lem, new);
+	if ((lem->current_max_throughput = calc_max_output(lem)) == -1)
+	{
+		ft_lstdel(list, del_path);
+		error_exit(lem);
+	}
 }
+
+/*
+** TODO: Verify that pushback worked, old system was slow
+*/
 
 static void	add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 {
-	size_t	lstlen;
 	t_paths	new;
 
-	lstlen = ft_lstlen(*list);
 	if (!(new = path_add(path, index)))
 	{
 		ft_lstdel(list, del_path);
 		error_exit(lem);
 	}
 	ft_lstpushback(list, &new, sizeof(t_paths));
-	if (lstlen == ft_lstlen(*list))
-	{
-		ft_lstdel(list, del_path);
-		error_exit(lem);
-	}
 }
 
 static void	add_new_paths(t_lem *lem, t_list **list, t_paths path, t_room *room)
@@ -98,8 +110,9 @@ void		find_smallest_paths(t_lem *lem)
 	while (should_continue(lem, current_paths))
 	{
 		current = (t_paths)*((void**)current_paths->content);
-		ft_printf("%zu L : %d l : %zu m : %zu\n", i++,
-		lem_pathlen(lem), path_len(current), lem->current_max_throughput);
+		// ft_printf("%zu L : %d l : %zu m : %zu b: %zu\n", i++,
+		// lem_pathlen(lem), path_len(current), lem->current_max_throughput,
+		// lem->current_bandwidth);
 		add_new_paths(lem, &current_paths, current,
 			&lem->rooms[current[path_len(current) - 1] - 1]);
 		ft_lstpop(&current_paths, del_path);

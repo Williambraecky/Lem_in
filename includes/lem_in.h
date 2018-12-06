@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/05 17:52:07 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 16:54:52 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ struct		s_room
 	int		x;
 	int		y;
 	int		flag;
-	int		ant;
+	size_t	ant;
 	int		*connections;
 };
 
@@ -46,10 +46,14 @@ typedef struct s_lem	t_lem;
 struct		s_lem
 {
 	t_room	*rooms;
+	t_room	*last_1;
+	t_room	*last_2;
 	t_paths	*paths;
 	t_list	*solutions;
-	t_pathscombo current_combo;
-	int		ant_count;
+	t_paths	*solve;
+	size_t	ant_count;
+	size_t	current_bandwidth;
+	size_t	current_lines;
 	size_t	max_throughput;
 	size_t	current_max_throughput;
 	int		start;
@@ -75,7 +79,7 @@ void		parse_lemin(t_lem *lem);
 void		error_exit(t_lem *lem);
 void		lem_add_room(t_lem *lem, t_room room);
 size_t		lem_roomlen(t_lem *lem);
-t_room		*lem_get_room_id(t_lem *lem, int id);
+// t_room		*lem_get_room_id(t_lem *lem, int id);
 t_room		*lem_get_room_name(t_lem *lem, char *str);
 void		room_add_connections(t_lem *lem, t_room *room, int id);
 size_t		room_connlen(t_room *room);
@@ -96,6 +100,7 @@ int			calc_max_output(t_lem *lem);
 int			path_collide(t_paths path1, t_paths path2);
 void		move_ant(t_room *from, t_room *to);
 void		add_to_combo_list(t_lem *lem, t_paths path);
+size_t		compute_bandwidth(t_lem *lem, size_t nb_lines);
 
 /*
 ** Free

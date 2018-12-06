@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:16:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/04 11:46:13 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 17:10:57 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int			path_collide(t_paths path1, t_paths path2)
 {
 	size_t	len;
 
+	if (path1 == path2)
+		return (1);
 	len = path_len(path2) - 1;
 	while (len-- > 1)
 		if (path_passes_through(path1, path2[len]))
@@ -88,7 +90,16 @@ int			calc_max_output(t_lem *lem)
 		ft_bzero(paths, sizeof(*paths) * (len));
 		paths[0] = lem->paths[i];
 		check_throughput(lem, paths, len);
-		max = ft_max(max, current_size(paths));
+		if (max < current_size(paths))
+		{
+			max = current_size(paths);
+			ft_memdel((void**)&lem->solve);
+			lem->solve = paths;
+			lem->current_lines = path_len(lem->solve[max - 1]) - 1;
+			lem->current_bandwidth = compute_bandwidth(lem, lem->current_lines);
+			if (!(paths = (t_paths*)ft_memalloc(sizeof(*paths) * (len + 1))))
+				return (-1);
+		}
 		i++;
 	}
 	free(paths);
