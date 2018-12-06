@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 16:54:52 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 21:47:42 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define LEM_START 1
 # define LEM_END 2
 # define LEM_BUFFER_SIZE 4096
+# define LEM_ROOM_START 16
+# define LEM_CONN_START 3
 
 typedef int*	t_paths;
 
@@ -27,12 +29,15 @@ typedef struct s_room	t_room;
 struct		s_room
 {
 	char	*name;
+	size_t	hash;
 	int		index;
 	int		x;
 	int		y;
 	int		flag;
 	size_t	ant;
 	int		*connections;
+	size_t	max_conn;
+	size_t	nb_conn;
 };
 
 typedef struct s_pathscombo	t_pathscombo;
@@ -48,6 +53,8 @@ struct		s_lem
 	t_room	*rooms;
 	t_room	*last_1;
 	t_room	*last_2;
+	size_t	max_rooms;
+	size_t	nb_rooms;
 	t_paths	*paths;
 	t_list	*solutions;
 	t_paths	*solve;
@@ -78,11 +85,9 @@ void		parse_lemin(t_lem *lem);
 
 void		error_exit(t_lem *lem);
 void		lem_add_room(t_lem *lem, t_room room);
-size_t		lem_roomlen(t_lem *lem);
-// t_room		*lem_get_room_id(t_lem *lem, int id);
-t_room		*lem_get_room_name(t_lem *lem, char *str);
+t_room		*lem_get_room_name(t_lem *lem, char *str, int i);
 void		room_add_connections(t_lem *lem, t_room *room, int id);
-size_t		room_connlen(t_room *room);
+// size_t		room_connlen(t_room *room);
 int			is_valid_room_format(char *str);
 int			is_valid_conn_format(char *str);
 int			lem_is_valid(t_lem *lem);

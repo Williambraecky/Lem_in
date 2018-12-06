@@ -6,14 +6,14 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 18:21:20 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 17:23:10 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 22:01:06 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** Improve logic
+** TODO: Improve logic
 */
 
 static int	should_continue(t_lem *lem, t_list *list)
@@ -61,25 +61,36 @@ static void	process_path(t_lem *lem, t_list **list, t_paths path)
 }
 
 /*
-** TODO: Verify that pushback worked, old system was slow
+** TODO: Verify that new_node is not NULL
+** TODO: Implement g_back without global variable
 */
+
+t_list *g_back = NULL;
 
 static void	add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 {
 	t_paths	new;
+	t_list	*new_node;
 
 	if (!(new = path_add(path, index)))
 	{
 		ft_lstdel(list, del_path);
 		error_exit(lem);
 	}
-	ft_lstpushback(list, &new, sizeof(t_paths));
+	new_node = ft_lstnew(&new, sizeof(t_paths));
+	if (!(*list))
+		*list = new_node;
+	else
+		g_back->next = new_node;
+	g_back = new_node;
 }
 
 static void	add_new_paths(t_lem *lem, t_list **list, t_paths path, t_room *room)
 {
 	size_t	i;
 
+	if (!room->connections)
+		return ;
 	if (room_conn_contains(room, lem->end))
 	{
 		process_path(lem, list, path);
@@ -88,8 +99,7 @@ static void	add_new_paths(t_lem *lem, t_list **list, t_paths path, t_room *room)
 	i = 0;
 	while (room->connections[i])
 	{
-		if (room->connections[i] != lem->end
-		&& room_connlen(&lem->rooms[room->connections[i] - 1]) > 1
+		if (lem->rooms[room->connections[i] - 1].nb_conn > 1
 		&& !path_passes_through(path, room->connections[i]))
 			add_new_path(lem, list, path, room->connections[i]);
 		i++;

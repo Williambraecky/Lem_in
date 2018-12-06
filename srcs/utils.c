@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:43:10 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 16:55:32 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 21:49:15 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int		lem_is_valid(t_lem *lem)
 		return (0);
 	if (lem->start == 0 || lem->end == 0 || lem->ant_count <= 0)
 		return (0);
-	if (room_connlen(&lem->rooms[lem->start - 1]) == 0)
+	if (lem->rooms[lem->start - 1].nb_conn == 0)
 		return (0);
-	if (room_connlen(&lem->rooms[lem->end - 1]) == 0)
+	if (lem->rooms[lem->end - 1].nb_conn == 0)
 		return (0);
 	return (1);
 }

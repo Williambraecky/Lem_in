@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:15:56 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/01 01:24:22 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 21:52:56 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,6 @@ int		is_valid_conn_format(char *str)
 	return (str != tmp && *(tmp + 1) != '\0');
 }
 
-size_t	room_connlen(t_room *room)
-{
-	size_t	i;
-
-	i = 0;
-	if (!room->connections)
-		return (i);
-	while (room->connections[i])
-		i++;
-	return (i);
-}
-
 int		room_conn_contains(t_room *room, int id)
 {
 	size_t	i;
@@ -71,16 +59,27 @@ int		room_conn_contains(t_room *room, int id)
 void	room_add_connections(t_lem *lem, t_room *room, int id)
 {
 	int		*new;
-	size_t	len;
+	size_t	i;
 
 	if (room_conn_contains(room, id))
 		return ;
-	len = room_connlen(room);
-	if (!(new = (int*)ft_memalloc(sizeof(*new) * (len + 2))))
-		error_exit(lem);
-	new[len] = id;
-	while (len--)
-		new[len] = room->connections[len];
-	free(room->connections);
-	room->connections = new;
+	if (room->max_conn == 0)
+		room->max_conn = LEM_CONN_START;
+	if (!room->connections || room->nb_conn == room->max_conn)
+	{
+		if (room->connections)
+			room->max_conn *= 2;
+		if (!(new = (int*)ft_memalloc(sizeof(*new) * (room->max_conn + 1))))
+			error_exit(lem);
+		i = 0;
+		if (room->connections)
+			while (room->connections[i])
+			{
+				new[i] = room->connections[i];
+				i++;
+			}
+		ft_memdel((void**)&room->connections);
+		room->connections = new;
+	}
+	room->connections[room->nb_conn++] = id;
 }

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 16:50:31 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 21:53:35 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	add_tube(t_lem *lem, char *str)
 
 	tmp = ft_strchr(str, '-');
 	*tmp = '\0';
-	room1 = lem_get_room_name(lem, str);
-	room2 = lem_get_room_name(lem, tmp + 1);
+	room1 = lem_get_room_name(lem, str, 1);
+	room2 = lem_get_room_name(lem, tmp + 1, 0);
 	if (room1 == NULL || room2 == NULL)
 	{
 		ft_strdel(&str);
@@ -74,6 +74,8 @@ static void	add_room(t_lem *lem, char *str, int *flag, int index)
 	*flag = 0;
 	room.ant = 0;
 	room.connections = NULL;
+	room.max_conn = 0;
+	room.nb_conn = 0;
 	ft_strdel(&split[1]);
 	ft_strdel(&split[2]);
 	ft_memdel((void**)&split);
@@ -83,12 +85,10 @@ static void	add_room(t_lem *lem, char *str, int *flag, int index)
 static void	parse_rooms(t_lem *lem)
 {
 	char	*str;
-	int		index;
 	int		ret;
 	int		flag;
 
 	flag = 0;
-	index = 1;
 	while ((ret = get_next_line(0, &str)) > 0)
 	{
 		if (!is_valid_room_format(str))
@@ -99,7 +99,7 @@ static void	parse_rooms(t_lem *lem)
 		else if (ft_strequ(str, "##end"))
 			flag = LEM_END;
 		if (*str != '#')
-			add_room(lem, str, &flag, index++);
+			add_room(lem, str, &flag, ++lem->nb_rooms);
 		ft_strdel(&str);
 	}
 	if (ret == -1)
