@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 21:47:42 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 23:17:41 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_lem	t_lem;
 struct		s_lem
 {
 	t_room	*rooms;
+	t_room	**hash_table;
 	t_room	*last_1;
 	t_room	*last_2;
 	size_t	max_rooms;
@@ -106,6 +107,7 @@ int			path_collide(t_paths path1, t_paths path2);
 void		move_ant(t_room *from, t_room *to);
 void		add_to_combo_list(t_lem *lem, t_paths path);
 size_t		compute_bandwidth(t_lem *lem, size_t nb_lines);
+size_t		simple_hash(char *str);
 
 /*
 ** Free

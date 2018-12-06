@@ -6,23 +6,11 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 21:41:52 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/06 23:24:25 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-size_t	lem_roomlen(t_lem *lem)
-{
-	size_t	i;
-
-	i = 0;
-	if (!lem->rooms)
-		return (i);
-	while (lem->rooms[i].name)
-		i++;
-	return (i);
-}
 
 size_t	simple_hash(char *str)
 {
@@ -36,28 +24,41 @@ size_t	simple_hash(char *str)
 
 t_room	*lem_get_room_name(t_lem *lem, char *str, int i)
 {
-	t_room	*rooms;
-	size_t	hash;
+	size_t	j;
 
-	if (lem->last_1 && ft_strcmp(lem->last_1->name, str) == 0)
-		return (lem->last_1);
-	else if (lem->last_2 && ft_strcmp(lem->last_2->name, str) == 0)
-		return (lem->last_2);
-	hash = simple_hash(str);
-	rooms = lem->rooms;
-	while (rooms->name)
+	(void)i;
+	j = simple_hash(str) % lem->nb_rooms;
+	while (1)
 	{
-		if (hash == rooms->hash && !ft_strcmp(rooms->name, str))
-		{
-			if (i == 1)
-				lem->last_1 = rooms;
-			else if (i == 2)
-				lem->last_2 = rooms;
-			return (rooms);
-		}
-		rooms++;
+		if (ft_strcmp(lem->hash_table[j]->name, str) == 0)
+			return (lem->hash_table[j]);
+		j++;
+		if (j == lem->nb_rooms)
+			j = 0;
 	}
 	return (NULL);
+	// t_room	*rooms;
+	// size_t	hash;
+	//
+	// if (lem->last_1 && ft_strcmp(lem->last_1->name, str) == 0)
+	// 	return (lem->last_1);
+	// else if (lem->last_2 && ft_strcmp(lem->last_2->name, str) == 0)
+	// 	return (lem->last_2);
+	// hash = simple_hash(str);
+	// rooms = lem->rooms;
+	// while (rooms->name)
+	// {
+	// 	if (hash == rooms->hash && !ft_strcmp(rooms->name, str))
+	// 	{
+	// 		if (i == 1)
+	// 			lem->last_1 = rooms;
+	// 		else if (i == 2)
+	// 			lem->last_2 = rooms;
+	// 		return (rooms);
+	// 	}
+	// 	rooms++;
+	// }
+	// return (NULL);
 }
 
 /*
