@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 10:51:19 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/10/24 16:57:17 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/05 20:45:47 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static int		ft_read_next_line(t_list **list, const int fd,
 	}
 	while ((j = read(fd, buffer, BUFF_SIZE)) > 0)
 	{
+		write(1, buffer, j);
 		buffer[j] = '\0';
 		l = ft_new_line(fd, buffer, j);
 		ft_lstpushback(list, l, sizeof(t_line));
