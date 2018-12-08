@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/08 14:01:20 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/08 17:22:36 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_room	*lem_get_room_name(t_lem *lem, char *str)
 	size_t	orig;
 
 	hash = simple_hash(str);
-	j = hash % lem->nb_rooms;
+	j = hash % (lem->nb_rooms * 2);
 	orig = j;
 	while (1)
 	{
@@ -39,7 +39,7 @@ t_room	*lem_get_room_name(t_lem *lem, char *str)
 		j++;
 		if (j == orig)
 			break;
-		if (j == lem->nb_rooms)
+		if (j == (lem->nb_rooms * 2))
 			j = 0;
 	}
 	return (NULL);

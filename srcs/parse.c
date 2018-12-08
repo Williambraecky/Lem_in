@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/08 13:45:14 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/08 17:22:31 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,17 @@ void	post_rooms(t_lem *lem)
 	size_t	i;
 	size_t	j;
 
-	if (!(lem->hash_table = ft_memalloc(sizeof(t_room*) * lem->nb_rooms)))
+	if (!(lem->hash_table = ft_memalloc(sizeof(t_room*) *
+	(lem->nb_rooms * 2))))
 		error_exit(lem);
 	i = 0;
 	while (lem->rooms[i].name)
 	{
-		j = lem->rooms[i].hash % lem->nb_rooms;
+		j = lem->rooms[i].hash % (lem->nb_rooms * 2);
 		while (lem->hash_table[j])
 		{
 			j++;
-			if (j == lem->nb_rooms)
+			if (j == (lem->nb_rooms * 2))
 				j = 0;
 		}
 		lem->hash_table[j] = &lem->rooms[i++];
