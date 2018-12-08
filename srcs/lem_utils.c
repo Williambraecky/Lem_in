@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/08 12:50:52 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/08 14:01:20 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ size_t	simple_hash(char *str)
 	return (hash);
 }
 
-t_room	*lem_get_room_name(t_lem *lem, char *str, int i)
+t_room	*lem_get_room_name(t_lem *lem, char *str)
 {
 	size_t	hash;
 	size_t	j;
 	size_t	orig;
 
-	(void)i;
 	hash = simple_hash(str);
 	j = hash % lem->nb_rooms;
 	orig = j;
@@ -44,28 +43,6 @@ t_room	*lem_get_room_name(t_lem *lem, char *str, int i)
 			j = 0;
 	}
 	return (NULL);
-	// t_room	*rooms;
-	// size_t	hash;
-	//
-	// if (lem->last_1 && ft_strcmp(lem->last_1->name, str) == 0)
-	// 	return (lem->last_1);
-	// else if (lem->last_2 && ft_strcmp(lem->last_2->name, str) == 0)
-	// 	return (lem->last_2);
-	// hash = simple_hash(str);
-	// rooms = lem->rooms;
-	// while (rooms->name)
-	// {
-	// 	if (hash == rooms->hash && !ft_strcmp(rooms->name, str))
-	// 	{
-	// 		if (i == 1)
-	// 			lem->last_1 = rooms;
-	// 		else if (i == 2)
-	// 			lem->last_2 = rooms;
-	// 		return (rooms);
-	// 	}
-	// 	rooms++;
-	// }
-	// return (NULL);
 }
 
 /*
@@ -114,6 +91,7 @@ void	lem_path_add(t_lem *lem, t_paths paths, t_list **list)
 		ft_lstdel(list, del_path);
 		error_exit(lem);
 	}
+	lem->nb_paths++;
 	new[len] = paths;
 	while (len--)
 		new[len] = lem->paths[len];

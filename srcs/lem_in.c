@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 21:59:47 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/08 14:14:34 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,6 @@ int		main(int argc __attribute__((unused)), char **argv)
 	buffer_flush();
 	find_smallest_paths(&lem);
 	i = 0;
-	// ft_printf("%zu\n", ft_lstlen(lem.solutions));
-	// ft_printf("l: %zu ; b: %zu t: %zur\n",
-	// lem.current_lines, lem.current_bandwidth,
-	// compute_bandwidth(&lem, lem.current_lines + 1));
 	while (lem.paths && lem.solve && lem.solve[i])
 		print_path(&lem, lem.solve[i++]);
 	//move_ants(&lem, lem.paths[0]);

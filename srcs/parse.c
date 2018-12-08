@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 23:23:03 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/08 13:45:14 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	add_tube(t_lem *lem, char *str)
 
 	tmp = ft_strchr(str, '-');
 	*tmp = '\0';
-	room1 = lem_get_room_name(lem, str, 1);
-	room2 = lem_get_room_name(lem, tmp + 1, 0);
+	room1 = lem_get_room_name(lem, str);
+	room2 = lem_get_room_name(lem, tmp + 1);
 	if (room1 == NULL || room2 == NULL)
 	{
 		ft_strdel(&str);
@@ -57,7 +57,6 @@ static void	parse_tubes(t_lem *lem, char *str)
 {
 	int	ret;
 
-	//buffer_putendl(str);
 	post_rooms(lem);
 	if (!str || !is_valid_conn_format(str))
 		error_exit(lem);
@@ -67,7 +66,6 @@ static void	parse_tubes(t_lem *lem, char *str)
 	{
 		if (!is_valid_conn_format(str))
 			break ;
-		//buffer_putendl(str);
 		if (*str != '#')
 			add_tube(lem, str);
 		ft_strdel(&str);
@@ -75,10 +73,7 @@ static void	parse_tubes(t_lem *lem, char *str)
 	if (str)
 		ft_strdel(&str);
 	while ((ret = get_next_line(0, &str)) > 0)
-	{
-		//buffer_putendl(str);
 		ft_strdel(&str);
-	}
 }
 
 static void	add_room(t_lem *lem, char *str, int *flag, int index)
@@ -115,7 +110,6 @@ static void	parse_rooms(t_lem *lem)
 	{
 		if (!is_valid_room_format(str))
 			break ;
-		//buffer_putendl(str);
 		if (ft_strequ(str, "##start"))
 			flag = LEM_START;
 		else if (ft_strequ(str, "##end"))
@@ -129,6 +123,10 @@ static void	parse_rooms(t_lem *lem)
 	parse_tubes(lem, str);
 }
 
+/*
+** Handle comments before nb_ant
+*/
+
 void		parse_lemin(t_lem *lem)
 {
 	char	*str;
@@ -136,7 +134,6 @@ void		parse_lemin(t_lem *lem)
 	if (get_next_line(0, &str) != 1 || !ft_strisnumber(str))
 		error_exit(NULL);
 	lem->ant_count = ft_atol(str);
-	//buffer_putendl(str);
 	ft_strdel(&str);
 	parse_rooms(lem);
 }

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 23:17:41 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/08 14:03:15 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ struct		s_lem
 	size_t	max_rooms;
 	size_t	nb_rooms;
 	t_paths	*paths;
+	size_t	nb_paths;
 	t_list	*solutions;
 	t_paths	*solve;
 	size_t	ant_count;
@@ -86,9 +87,8 @@ void		parse_lemin(t_lem *lem);
 
 void		error_exit(t_lem *lem);
 void		lem_add_room(t_lem *lem, t_room room);
-t_room		*lem_get_room_name(t_lem *lem, char *str, int i);
+t_room		*lem_get_room_name(t_lem *lem, char *str);
 void		room_add_connections(t_lem *lem, t_room *room, int id);
-// size_t		room_connlen(t_room *room);
 int			is_valid_room_format(char *str);
 int			is_valid_conn_format(char *str);
 int			lem_is_valid(t_lem *lem);
@@ -100,7 +100,6 @@ void		del_path(void *elem, size_t content_size);
 int			room_conn_contains(t_room *room, int id);
 void		lem_path_add(t_lem *lem, t_paths paths, t_list **list);
 t_paths		new_path(t_lem *lem, int start_index);
-t_paths		path_dup(t_paths path);
 void		print_path(t_lem *lem, t_paths path);
 int			calc_max_output(t_lem *lem);
 int			path_collide(t_paths path1, t_paths path2);

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 14:32:50 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/04 18:25:33 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/08 14:04:09 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 size_t	lem_pathlen(t_lem *lem)
 {
-	size_t	i;
-
-	i = 0;
-	if (!lem->paths)
-		return (i);
-	while (lem->paths[i])
-		i++;
-	return (i);
+	return (lem->nb_paths);
 }
+
+/*
+** TODO: implement len at start of path? len->start->...->end ??
+** 75K+ calls on test20000
+*/
 
 size_t	path_len(t_paths path)
 {

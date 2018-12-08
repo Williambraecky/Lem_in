@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:43:10 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 21:49:15 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/08 14:00:32 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,6 @@ void	del_path(void *elem, size_t content_size)
 	(void)content_size;
 	free(*(void**)elem);
 	free(elem);
-}
-
-t_paths	path_dup(t_paths path)
-{
-	t_paths	new;
-	size_t	len;
-
-	len = path_len(path);
-	if (!(new = ft_memalloc(sizeof(*new) * (len + 1))))
-		return (NULL);
-	while (len--)
-		new[len] = path[len];
-	return (new);
 }
 
 void	move_ant(t_room *from, t_room *to)
