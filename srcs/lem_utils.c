@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 23:24:25 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/08 12:50:52 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,22 @@ size_t	simple_hash(char *str)
 
 t_room	*lem_get_room_name(t_lem *lem, char *str, int i)
 {
+	size_t	hash;
 	size_t	j;
+	size_t	orig;
 
 	(void)i;
-	j = simple_hash(str) % lem->nb_rooms;
+	hash = simple_hash(str);
+	j = hash % lem->nb_rooms;
+	orig = j;
 	while (1)
 	{
-		if (ft_strcmp(lem->hash_table[j]->name, str) == 0)
+		if (hash == lem->hash_table[j]->hash &&
+			ft_strcmp(lem->hash_table[j]->name, str) == 0)
 			return (lem->hash_table[j]);
 		j++;
+		if (j == orig)
+			break;
 		if (j == lem->nb_rooms)
 			j = 0;
 	}
