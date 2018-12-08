@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 18:21:20 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 22:01:06 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/08 14:21:03 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ static int	should_continue(t_lem *lem, t_list *list)
 		return (0);
 	if (!lem->paths)
 		return (1);
-	if (path_len((t_paths)*(void**)list->content) - 1 +
-		lem->current_max_throughput > (size_t)lem->ant_count)
-		return (0);
 	if (lem->paths[0][0] == lem->start && lem->paths[0][1] == lem->end)
 		return (0);
 	if (lem->current_max_throughput >= lem->max_throughput)
@@ -37,8 +34,7 @@ static int	should_continue(t_lem *lem, t_list *list)
 	if (lowest > lem->current_lines &&
 		compute_bandwidth(lem, lowest) >= lem->ant_count)
 		return (0);
-	if (lowest - 1 +
-		lem->current_max_throughput > lem->ant_count)
+	if (lowest - 1 + lem->current_max_throughput > lem->ant_count)
 		return (0);
 	return (1);
 }
