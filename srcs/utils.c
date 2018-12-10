@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:43:10 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/08 14:00:32 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/10 13:50:55 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,13 @@ void	move_ant(t_room *from, t_room *to)
 
 void	print_path(t_lem *lem, t_paths path)
 {
-	size_t	len;
 	size_t	i;
 
-	i = 0;
-	len = path_len(path);
-	while (i < len)
+	i = 1;
+	while (path[i])
 	{
 		ft_printf("%s", lem->rooms[path[i++] - 1].name);
-		if (i < len)
+		if (path[i])
 			ft_printf("->");
 	}
 	ft_printf("\n");

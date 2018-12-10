@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:16:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 17:10:57 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/10 14:01:15 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int			path_collide(t_paths path1, t_paths path2)
 
 	if (path1 == path2)
 		return (1);
-	len = path_len(path2) - 1;
-	while (len-- > 1)
+	len = path_len(path2);
+	while (len-- > 2)
 		if (path_passes_through(path1, path2[len]))
 			return (1);
 	return (0);

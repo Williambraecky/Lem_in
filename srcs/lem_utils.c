@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/08 17:22:36 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/10 13:59:00 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_room	*lem_get_room_name(t_lem *lem, char *str)
 			return (lem->hash_table[j]);
 		j++;
 		if (j == orig)
-			break;
+			break ;
 		if (j == (lem->nb_rooms * 2))
 			j = 0;
 	}

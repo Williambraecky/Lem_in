@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 18:21:20 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/08 14:21:03 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/10 13:54:37 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void		find_smallest_paths(t_lem *lem)
 		// lem_pathlen(lem), path_len(current), lem->current_max_throughput,
 		// lem->current_bandwidth);
 		add_new_paths(lem, &current_paths, current,
-			&lem->rooms[current[path_len(current) - 1] - 1]);
+			&lem->rooms[current[path_len(current)] - 1]);
 		ft_lstpop(&current_paths, del_path);
 	}
 	if (current_paths != NULL)
