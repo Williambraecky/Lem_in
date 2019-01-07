@@ -6,7 +6,7 @@
 #    By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/25 13:02:54 by wbraeckm          #+#    #+#              #
-#    Updated: 2018/12/01 01:48:55 by wbraeckm         ###   ########.fr        #
+#    Updated: 2018/12/18 15:08:20 by wbraeckm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFOLDER = ./libft/
 LIBINCLUDES = ./libft/includes/
 LIBFT = $(LIBFOLDER)libft.a
 
-ITEMS = $(shell find srcs -type f | grep -E "\.c$$" | sed 's/srcs//g')
+ITEMS = $(shell find srcs -type f | grep -E ".c$$" | sed 's/srcs//g')
 SRCS = $(addprefix $(SRCSFOLDER), $(ITEMS))
 OBJ = $(addprefix $(OBJFOLDER), $(ITEMS:.c=.o))
 SRCSUBS = $(shell find ./srcs -type d)

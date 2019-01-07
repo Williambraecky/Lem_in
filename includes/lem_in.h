@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/08 14:03:15 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/07 18:26:42 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void		move_ant(t_room *from, t_room *to);
 void		add_to_combo_list(t_lem *lem, t_paths path);
 size_t		compute_bandwidth(t_lem *lem, size_t nb_lines);
 size_t		simple_hash(char *str);
+void		sort_paths(t_paths *paths, size_t nb_paths);
 
 /*
 ** Free

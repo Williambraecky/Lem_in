@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 10:48:40 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/06 21:33:59 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/12/18 15:11:52 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libft.h"
 # include <unistd.h>
 
-# define BUFF_SIZE 2048
+# define BUFF_SIZE 256
 
 # define GNL_PRINT 1
 
