@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:16:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/10 14:01:15 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/07 23:20:12 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int			calc_max_output(t_lem *lem)
 			lem->solve = paths;
 			lem->current_lines = path_len(lem->solve[max - 1]) - 1;
 			lem->current_bandwidth = compute_bandwidth(lem, lem->current_lines);
+			lem->current_max_throughput = max;
 			if (!(paths = (t_paths*)ft_memalloc(sizeof(*paths) * (len + 1))))
 				return (-1);
 		}

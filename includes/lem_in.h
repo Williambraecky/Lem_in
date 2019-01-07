@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/07 18:26:42 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/07 23:04:31 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ struct		s_room
 {
 	char	*name;
 	size_t	hash;
+	int		used;
 	int		index;
 	int		x;
 	int		y;
@@ -61,6 +62,7 @@ struct		s_lem
 	t_list	*solutions;
 	t_paths	*solve;
 	size_t	ant_count;
+	size_t	remaining;
 	size_t	current_bandwidth;
 	size_t	current_lines;
 	size_t	max_throughput;
@@ -103,7 +105,7 @@ t_paths		new_path(t_lem *lem, int start_index);
 void		print_path(t_lem *lem, t_paths path);
 int			calc_max_output(t_lem *lem);
 int			path_collide(t_paths path1, t_paths path2);
-void		move_ant(t_room *from, t_room *to);
+void		move_ant(t_lem *lem, t_room *from, t_room *to);
 void		add_to_combo_list(t_lem *lem, t_paths path);
 size_t		compute_bandwidth(t_lem *lem, size_t nb_lines);
 size_t		simple_hash(char *str);

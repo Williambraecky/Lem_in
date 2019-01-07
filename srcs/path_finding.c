@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 18:21:20 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/10 13:54:37 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/07 23:21:30 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ static int	should_continue(t_lem *lem, t_list *list)
 	lowest = path_len((t_paths)*(void**)list->content);
 	if (lowest > lem->current_lines &&
 		compute_bandwidth(lem, lowest) >= lem->ant_count)
+	{
+		lem->current_lines = lowest;
+		lem->current_bandwidth = compute_bandwidth(lem, lowest);
 		return (0);
+	}
 	if (lowest - 1 + lem->current_max_throughput > lem->ant_count)
 		return (0);
 	return (1);
@@ -58,10 +62,7 @@ static void	process_path(t_lem *lem, t_list **list, t_paths path)
 
 /*
 ** TODO: Verify that new_node is not NULL
-** TODO: Implement g_back without global variable
 */
-
-t_list *g_back = NULL;
 
 static void	add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 {
@@ -77,8 +78,8 @@ static void	add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 	if (!(*list))
 		*list = new_node;
 	else
-		g_back->next = new_node;
-	g_back = new_node;
+		list[1]->next = new_node;
+	list[1] = new_node;
 }
 
 static void	add_new_paths(t_lem *lem, t_list **list, t_paths path, t_room *room)
@@ -104,25 +105,26 @@ static void	add_new_paths(t_lem *lem, t_list **list, t_paths path, t_room *room)
 
 void		find_smallest_paths(t_lem *lem)
 {
-	t_list	*current_paths;
+	t_list	*current_paths[2];
 	t_paths	current;
 	size_t	i;
 
-	current_paths = NULL;
+	current_paths[0] = NULL;
+	current_paths[1] = NULL;
 	current = new_path(lem, lem->start);
-	add_new_paths(lem, &current_paths, current, &lem->rooms[lem->start - 1]);
+	add_new_paths(lem, current_paths, current, &lem->rooms[lem->start - 1]);
 	free(current);
 	i = 0;
-	while (should_continue(lem, current_paths))
+	while (should_continue(lem, current_paths[0]))
 	{
-		current = (t_paths)*((void**)current_paths->content);
+		current = (t_paths)*((void**)current_paths[0]->content);
 		// ft_printf("%zu L : %d l : %zu m : %zu b: %zu\n", i++,
 		// lem_pathlen(lem), path_len(current), lem->current_max_throughput,
 		// lem->current_bandwidth);
-		add_new_paths(lem, &current_paths, current,
+		add_new_paths(lem, current_paths, current,
 			&lem->rooms[current[path_len(current)] - 1]);
-		ft_lstpop(&current_paths, del_path);
+		ft_lstpop(current_paths, del_path);
 	}
-	if (current_paths != NULL)
-		ft_lstdel(&current_paths, del_path);
+	if (current_paths[0] != NULL)
+		ft_lstdel(current_paths, del_path);
 }

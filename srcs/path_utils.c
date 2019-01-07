@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 14:32:50 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/10 13:56:58 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/07 23:13:23 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,9 @@ size_t	lem_pathlen(t_lem *lem)
 	return (lem->nb_paths);
 }
 
-/*
-** TODO: implement len at start of path? len->start->...->end ??
-** 75K+ calls on test20000
-*/
-
 size_t	path_len(t_paths path)
 {
 	return ((size_t)path[0]);
-	// size_t	i;
-	//
-	// i = 0;
-	// if (!path)
-	// 	return (i);
-	// while (path[i])
-	// 	i++;
-	// return (i);
 }
 
 int		path_passes_through(t_paths path, int room_index)

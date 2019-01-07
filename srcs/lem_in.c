@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/07 18:46:49 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/07 23:33:59 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,65 +16,53 @@
 ** PROTOTYPE
 */
 
-// void	move_ants(t_lem *lem, t_paths path)
-// {
-// 	t_room	*end;
-// 	t_room	*current;
-// 	t_room	*current2;
-// 	size_t	len;
-//
-// 	end = lem_get_room_id(lem, lem->end);
-// 	while (end->ant != lem->ant_count)
-// 	{
-// 		len = path_len(path);
-// 		while (len-- > 1)
-// 		{
-// 			current = lem_get_room_id(lem, path[len]);
-// 			current2 = lem_get_room_id(lem, path[len - 1]);
-// 			if ((current2->ant != 0 && current2->flag != LEM_START) ||
-// 			(current2->flag == LEM_START && current2->ant != lem->ant_count))
-// 				move_ant(current2, current);
-// 		}
-// 		buffer_putchar('\n');
-// 	}
-// }
-
-static void	move_ants_on_path(t_lem *lem, t_paths path)
+static void	move_ants_on_path(t_lem *lem, t_paths path, int force, size_t line)
 {
 	t_room	*current;
 	t_room	*current2;
 	size_t	i;
 
 	i = path_len(path);
-	while (i-- > 2)
+	while (i-- > 1)
 	{
-		current2 = &lem->rooms[path[i + 1]];
-		current = &lem->rooms[path[i]];
-		if ((current2->ant != 0 && current2->flag != LEM_START) ||
-		(current2->flag == LEM_START && current2->ant != lem->ant_count))
-			move_ant(current2, current);
+		current = &lem->rooms[path[i + 1] - 1];
+		current2 = &lem->rooms[path[i] - 1];
+		if (current2->ant != 0 && current2->flag != LEM_START)
+			move_ant(lem, current2, current);
+		else if (current2->flag == LEM_START &&
+			current2->ant != lem->ant_count &&
+			(force || path_len(path) <= lem->current_lines - line + 1))
+			move_ant(lem, current2, current);
 	}
 }
 
 static void	move_ants(t_lem *lem)
 {
 	t_room	*end;
+	t_room	*start;
 	size_t	i;
+	size_t	line;
 
 	if (!lem->solve)
 		return ;
-	end = &lem->rooms[lem->end];
-	while (end->ant != lem->ant_count)
+	lem->remaining = lem->ant_count;
+	end = &lem->rooms[lem->end - 1];
+	start = &lem->rooms[lem->start - 1];
+	line = 0;
+	while (end->ant < lem->ant_count)
 	{
 		i = 0;
 		while (lem->solve[i])
 		{
-			if (i == 0 || path_len(lem->solve[i]) <= lem->ant_count)
-				move_ants_on_path(lem, lem->solve[i]);
+			move_ants_on_path(lem, lem->solve[i],
+			i == 0 || path_len(lem->solve[i]) == path_len(lem->solve[0]), line);
 			i++;
 		}
+		line++;
 		buffer_putchar('\n');
 	}
+	buffer_putnbr(line);
+	buffer_putchar('\n');
 }
 
 int		main(int argc __attribute__((unused)), char **argv)
@@ -94,11 +82,12 @@ int		main(int argc __attribute__((unused)), char **argv)
 								lem.rooms[lem.end - 1].nb_conn);
 	buffer_flush();
 	find_smallest_paths(&lem);
-	sort_paths(lem.paths, lem.nb_paths);
+	sort_paths(lem.solve, lem.current_max_throughput);
 	// move_ants(&lem);
 	i = 0;
 	while (lem.paths && lem.solve && lem.solve[i])
 		print_path(&lem, lem.solve[i++]);
+	ft_putchar('\n');
 	move_ants(&lem);
 	free(lem.solve);
 	if (lem.rooms)
