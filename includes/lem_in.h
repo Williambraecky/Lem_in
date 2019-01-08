@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/07 23:04:31 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/08 15:12:06 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define LEM_BUFFER_SIZE 4096
 # define LEM_ROOM_START 16
 # define LEM_CONN_START 3
+# define LEM_COMBO_START 10
 
 typedef int*	t_paths;
 
@@ -53,8 +54,6 @@ struct		s_lem
 {
 	t_room	*rooms;
 	t_room	**hash_table;
-	t_room	*last_1;
-	t_room	*last_2;
 	size_t	max_rooms;
 	size_t	nb_rooms;
 	t_paths	*paths;
@@ -62,7 +61,6 @@ struct		s_lem
 	t_list	*solutions;
 	t_paths	*solve;
 	size_t	ant_count;
-	size_t	remaining;
 	size_t	current_bandwidth;
 	size_t	current_lines;
 	size_t	max_throughput;
@@ -105,11 +103,12 @@ t_paths		new_path(t_lem *lem, int start_index);
 void		print_path(t_lem *lem, t_paths path);
 int			calc_max_output(t_lem *lem);
 int			path_collide(t_paths path1, t_paths path2);
-void		move_ant(t_lem *lem, t_room *from, t_room *to);
+void		move_ant(t_room *from, t_room *to);
 void		add_to_combo_list(t_lem *lem, t_paths path);
 size_t		compute_bandwidth(t_lem *lem, size_t nb_lines);
 size_t		simple_hash(char *str);
 void		sort_paths(t_paths *paths, size_t nb_paths);
+void		reset_room_used(t_lem *lem);
 
 /*
 ** Free

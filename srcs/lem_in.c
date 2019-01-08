@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/07 23:33:59 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/08 15:18:21 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,30 @@
 ** PROTOTYPE
 */
 
-static void	move_ants_on_path(t_lem *lem, t_paths path, int force, size_t line)
+static int	move_ants_on_path(t_lem *lem, t_paths path, int force, size_t line)
 {
 	t_room	*current;
 	t_room	*current2;
 	size_t	i;
+	int		ret;
 
 	i = path_len(path);
+	ret = 0;
 	while (i-- > 1)
 	{
 		current = &lem->rooms[path[i + 1] - 1];
 		current2 = &lem->rooms[path[i] - 1];
 		if (current2->ant != 0 && current2->flag != LEM_START)
-			move_ant(lem, current2, current);
+			move_ant(current2, current);
 		else if (current2->flag == LEM_START &&
 			current2->ant != lem->ant_count &&
 			(force || path_len(path) <= lem->current_lines - line + 1))
-			move_ant(lem, current2, current);
+		{
+			ret = 1;
+			move_ant(current2, current);
+		}
 	}
+	return (ret);
 }
 
 static void	move_ants(t_lem *lem)
@@ -42,10 +48,10 @@ static void	move_ants(t_lem *lem)
 	t_room	*start;
 	size_t	i;
 	size_t	line;
+	int		prev;
 
 	if (!lem->solve)
 		return ;
-	lem->remaining = lem->ant_count;
 	end = &lem->rooms[lem->end - 1];
 	start = &lem->rooms[lem->start - 1];
 	line = 0;
@@ -54,8 +60,8 @@ static void	move_ants(t_lem *lem)
 		i = 0;
 		while (lem->solve[i])
 		{
-			move_ants_on_path(lem, lem->solve[i],
-			i == 0 || path_len(lem->solve[i]) == path_len(lem->solve[0]), line);
+			prev = move_ants_on_path(lem, lem->solve[i],
+			i == 0 || (prev && lem->solve[i - 1][0] == lem->solve[i][0]), line);
 			i++;
 		}
 		line++;

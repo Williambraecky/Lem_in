@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/10 13:59:00 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/08 15:10:32 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@ t_room	*lem_get_room_name(t_lem *lem, char *str)
 			j = 0;
 	}
 	return (NULL);
+}
+
+void	reset_room_used(t_lem *lem)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < lem->nb_rooms)
+		lem->rooms[i++].used = 0;
 }
 
 /*

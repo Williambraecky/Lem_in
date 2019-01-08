@@ -6,13 +6,33 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:43:10 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/07 20:14:10 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/08 15:12:22 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		lem_is_valid(t_lem *lem)
+static int	check_connections(t_lem *lem, int id)
+{
+	t_room	*room;
+	size_t	i;
+
+	room = &lem->rooms[id - 1];
+	if (room_conn_contains(room, lem->start))
+		return (1);
+	i = 0;
+	while (room->connections[i])
+	{
+		if (lem->rooms[room->connections[i] - 1].used == 0)
+			if (check_connections(lem, room->connections[i]))
+				return (1);
+		i++;
+	}
+	room->used = 1;
+	return (0);
+}
+
+int			lem_is_valid(t_lem *lem)
 {
 	if (!lem->rooms)
 		return (0);
@@ -22,23 +42,23 @@ int		lem_is_valid(t_lem *lem)
 		return (0);
 	if (lem->rooms[lem->end - 1].nb_conn == 0)
 		return (0);
+	if (!check_connections(lem, lem->start))
+		return (0);
+	reset_room_used(lem);
 	return (1);
 }
 
-void	del_path(void *elem, size_t content_size)
+void		del_path(void *elem, size_t content_size)
 {
 	(void)content_size;
 	free(*(void**)elem);
 	free(elem);
 }
 
-void	move_ant(t_lem *lem, t_room *from, t_room *to)
+void		move_ant(t_room *from, t_room *to)
 {
 	if (from->flag == LEM_START)
-	{
-		lem->remaining--;
 		from->ant++;
-	}
 	buffer_putchar('L');
 	buffer_putnbr(from->ant);
 	buffer_putchar('-');
@@ -63,7 +83,7 @@ void	move_ant(t_lem *lem, t_room *from, t_room *to)
 	}
 }
 
-void	print_path(t_lem *lem, t_paths path)
+void		print_path(t_lem *lem, t_paths path)
 {
 	size_t	i;
 
