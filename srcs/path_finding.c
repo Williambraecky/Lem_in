@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 18:21:20 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/08 14:39:15 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/08 23:02:40 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ static void	add_new_paths(t_lem *lem, t_list **list, t_paths path, t_room *room)
 	while (room->connections[i])
 	{
 		if (lem->rooms[room->connections[i] - 1].nb_conn > 1
-		&& !path_passes_through(path, room->connections[i]))
+		&& !path_passes_through(path, room->connections[i])
+		&& lem->rooms[room->connections[i] - 1].count++ < MAX_PATHS)
 			add_new_path(lem, list, path, room->connections[i]);
 		i++;
 	}

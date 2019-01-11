@@ -6,29 +6,30 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:43:10 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/08 15:12:22 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/08 23:14:36 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int	check_connections(t_lem *lem, int id)
+static int	check_connections(t_lem *lem, int id, size_t dist)
 {
 	t_room	*room;
 	size_t	i;
 
 	room = &lem->rooms[id - 1];
-	if (room_conn_contains(room, lem->start))
+	if (room_conn_contains(room, lem->end))
 		return (1);
 	i = 0;
+	room->used = 1;
+	room->dist = dist;
 	while (room->connections[i])
 	{
 		if (lem->rooms[room->connections[i] - 1].used == 0)
-			if (check_connections(lem, room->connections[i]))
+			if (check_connections(lem, room->connections[i], dist + 1))
 				return (1);
 		i++;
 	}
-	room->used = 1;
 	return (0);
 }
 
@@ -42,7 +43,7 @@ int			lem_is_valid(t_lem *lem)
 		return (0);
 	if (lem->rooms[lem->end - 1].nb_conn == 0)
 		return (0);
-	if (!check_connections(lem, lem->start))
+	if (!check_connections(lem, lem->start, 1))
 		return (0);
 	reset_room_used(lem);
 	return (1);

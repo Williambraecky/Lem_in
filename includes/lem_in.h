@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/08 15:12:06 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/08 23:13:37 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define LEM_ROOM_START 16
 # define LEM_CONN_START 3
 # define LEM_COMBO_START 10
+# define MAX_PATHS 50
 
 typedef int*	t_paths;
 
@@ -32,6 +33,8 @@ struct		s_room
 	char	*name;
 	size_t	hash;
 	int		used;
+	size_t	dist;
+	int		count;
 	int		index;
 	int		x;
 	int		y;
