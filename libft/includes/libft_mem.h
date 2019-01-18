@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 11:02:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/18 13:53:21 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/18 14:47:01 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	*ft_memalloc(size_t t);
 void	ft_memdel(void **ap);
 void	ft_memswap(void *a, void *b, size_t len);
 void	*ft_realloc(void *old, size_t old_size, size_t new_size);
+void	*ft_memdup(void *ptr, size_t size);
 
 #endif
