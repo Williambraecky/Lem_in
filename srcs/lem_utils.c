@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/08 15:10:32 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/18 17:19:53 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	reset_room_used(t_lem *lem)
 void	lem_add_room(t_lem *lem, t_room room)
 {
 	t_room	*new;
-	size_t	i;
 
 	room.hash = simple_hash(room.name);
 	if (lem->max_rooms == 0)
@@ -70,16 +69,10 @@ void	lem_add_room(t_lem *lem, t_room room)
 	{
 		if (lem->rooms)
 			lem->max_rooms *= 2;
-		if (!(new = (t_room*)ft_memalloc(sizeof(*new) * (lem->max_rooms + 1))))
+		if (!(new = (t_room*)ft_realloc(lem->rooms,
+			sizeof(*new) * (lem->max_rooms / 2),
+			sizeof(*new) * (lem->max_rooms + 1))))
 			error_exit(lem);
-		i = 0;
-		if (lem->rooms)
-			while (lem->rooms[i].name)
-			{
-				new[i] = lem->rooms[i];
-				i++;
-			}
-		ft_memdel((void**)&lem->rooms);
 		lem->rooms = new;
 	}
 	lem->rooms[room.index - 1] = room;
@@ -89,19 +82,20 @@ void	lem_add_room(t_lem *lem, t_room room)
 		lem->end = room.index;
 }
 
-void	lem_path_add(t_lem *lem, t_paths paths, t_list **list)
+void	lem_path_add(t_lem *lem, t_paths path, t_list **list)
 {
 	t_paths	*new;
 	size_t	len;
 
-	len = lem_pathlen(lem);
+	len = lem->nb_paths;
+	normalize_path(path);
 	if (!(new = (t_paths*)ft_memalloc(sizeof(*new) * (len + 2))))
 	{
 		ft_lstdel(list, del_path);
 		error_exit(lem);
 	}
 	lem->nb_paths++;
-	new[len] = paths;
+	new[len] = path;
 	while (len--)
 		new[len] = lem->paths[len];
 	free(lem->paths);

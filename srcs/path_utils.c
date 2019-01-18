@@ -6,16 +6,11 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 14:32:50 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/07 23:13:23 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/18 15:44:58 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-size_t	lem_pathlen(t_lem *lem)
-{
-	return (lem->nb_paths);
-}
 
 size_t	path_len(t_paths path)
 {

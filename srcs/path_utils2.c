@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:16:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/08 11:53:04 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/18 15:45:21 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int			calc_max_output(t_lem *lem)
 	size_t	i;
 	int		max;
 
-	len = lem_pathlen(lem);
+	len = lem->nb_paths;
 	if (!(paths = (t_paths*)ft_memalloc(sizeof(*paths) * (len + 1))))
 		return (-1);
 	max = 0;

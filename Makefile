@@ -6,13 +6,13 @@
 #    By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/25 13:02:54 by wbraeckm          #+#    #+#              #
-#    Updated: 2018/12/18 15:08:20 by wbraeckm         ###   ########.fr        #
+#    Updated: 2019/01/18 17:00:00 by wbraeckm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem_in
 CC = gcc
-FLAGS = -O3 -Wall -Wextra -Werror
+FLAGS = -O3 -Wall -Wextra -Werror #-fsanitize=address
 INCLUDES = ./includes/
 SRCSFOLDER = ./srcs/
 OBJFOLDER = ./obj/
@@ -38,7 +38,7 @@ cclightgray = "\033[0;37m"
 
 all: lib $(NAME)
 
-$(OBJFOLDER)/%.o:$(SRCSFOLDER)/%.c includes/lem_in.h
+$(OBJFOLDER)/%.o:$(SRCSFOLDER)/%.c includes/lem_in.h Makefile
 	@printf $(ccblue)
 	@printf "Compiling %-$(LONGEST)s" $(notdir $<)
 	@$(CC) $(FLAGS) -o $@ -c $< -I$(INCLUDES) -I$(LIBINCLUDES)
