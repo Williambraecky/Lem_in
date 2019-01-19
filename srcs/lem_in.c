@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/18 17:01:14 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/19 18:16:50 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 // 	ret = 0;
 // 	while (i-- > 1)
 // 	{
-// 		current = &lem->rooms[path[i + 1] - 1];
-// 		current2 = &lem->rooms[path[i] - 1];
+// 		current = &lem->rooms[path[i + 1]];
+// 		current2 = &lem->rooms[path[i]];
 // 		if (current2->ant != 0 && current2->flag != LEM_START)
 // 			move_ant(current2, current);
 // 		else if (current2->flag == LEM_START &&
@@ -52,8 +52,8 @@
 //
 // 	if (!lem->solve)
 // 		return ;
-// 	end = &lem->rooms[lem->end - 1];
-// 	start = &lem->rooms[lem->start - 1];
+// 	end = &lem->rooms[lem->end];
+// 	start = &lem->rooms[lem->start];
 // 	line = 0;
 // 	while (end->ant < lem->ant_count)
 // 	{
@@ -80,12 +80,14 @@ int		main(int argc __attribute__((unused)), char **argv)
 	if (argc != 1)
 		error_exit(NULL);
 	ft_memset(&lem, 0, sizeof(lem));
+	lem.start = -1;
+	lem.end = -1;
 	parse_lemin(&lem);
 	if (!lem_is_valid(&lem))
 		error_exit(&lem);
 	buffer_putchar('\n');
-	lem.max_throughput = ft_min(lem.rooms[lem.start - 1].nb_conn,
-								lem.rooms[lem.end - 1].nb_conn);
+	lem.max_throughput = ft_min(lem.rooms[lem.start].nb_conn,
+								lem.rooms[lem.end].nb_conn);
 	buffer_flush();
 	suurballe(&lem);
 

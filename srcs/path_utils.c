@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 14:32:50 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/18 15:44:58 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/19 18:07:06 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ size_t	path_len(t_paths path)
 
 int		path_passes_through(t_paths path, int room_index)
 {
-	size_t	i;
+	int	i;
 
 	if (!path)
 		return (1);
 	i = 1;
-	while (path[i])
+	while (i - 1 < path[0])
 		if (path[i++] == room_index)
 			return (1);
 	return (0);
@@ -34,7 +34,7 @@ t_paths	new_path(t_lem *lem, int start_index)
 {
 	t_paths new;
 
-	if (!(new = (t_paths)ft_memalloc(sizeof(*new) * 3)))
+	if (!(new = (t_paths)ft_memalloc(sizeof(*new) * 2)))
 		error_exit(lem);
 	new[0] = 1;
 	new[1] = start_index;
@@ -47,7 +47,7 @@ t_paths	path_add(t_paths path, int room_index)
 	size_t	pathlen;
 
 	pathlen = path_len(path) + 1;
-	if (!(new = (t_paths)ft_memalloc(sizeof(*new) * (pathlen + 2))))
+	if (!(new = (t_paths)ft_memalloc(sizeof(*new) * (pathlen + 1))))
 		return (NULL);
 	new[0] = pathlen;
 	new[pathlen] = room_index;

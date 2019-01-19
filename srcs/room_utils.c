@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:15:56 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/18 15:46:58 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/19 18:04:37 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		room_conn_contains(t_room *room, int id)
 	if (!room->connections)
 		return (0);
 	i = 0;
-	while (room->connections[i])
+	while (i < room->nb_conn)
 		if (room->connections[i++] == id)
 			return (1);
 	return (0);

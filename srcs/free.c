@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:53:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/18 15:16:45 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/19 18:02:41 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_rooms(t_lem *lem)
 	if (!lem->rooms)
 		return ;
 	i = 0;
-	while (lem->rooms[i].name)
+	while (i < lem->nb_rooms)
 	{
 		ft_strdel(&lem->rooms[i].name);
 		ft_memdel((void**)&(lem->rooms[i].connections));
@@ -36,7 +36,7 @@ void	free_paths(t_lem *lem)
 	if (!lem->paths)
 		return ;
 	i = 0;
-	while (lem->paths[i])
+	while (i < lem->nb_paths)
 		ft_memdel((void**)&(lem->paths[i++]));
 	ft_memdel((void**)&(lem->paths));
 }

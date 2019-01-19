@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/18 17:06:24 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/19 18:10:07 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	post_rooms(t_lem *lem)
 	(lem->nb_rooms * 2))))
 		error_exit(lem);
 	i = 0;
-	while (lem->rooms[i].name)
+	while (i < lem->nb_rooms)
 	{
 		j = lem->rooms[i].hash % (lem->nb_rooms * 2);
 		while (lem->hash_table[j])
@@ -113,7 +113,7 @@ static void	parse_rooms(t_lem *lem)
 		else if (ft_strequ(str, "##end"))
 			flag = LEM_END;
 		if (*str != '#')
-			add_room(lem, str, &flag, ++lem->nb_rooms);
+			add_room(lem, str, &flag, lem->nb_rooms++);
 		ft_strdel(&str);
 	}
 	if (ret == -1)

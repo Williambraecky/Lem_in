@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/18 17:19:53 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/19 18:15:27 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,17 @@ void	lem_add_room(t_lem *lem, t_room room)
 	room.hash = simple_hash(room.name);
 	if (lem->max_rooms == 0)
 		lem->max_rooms = LEM_ROOM_START;
-	if (!lem->rooms || (size_t)room.index > lem->max_rooms)
+	if (!lem->rooms || (size_t)room.index >= lem->max_rooms)
 	{
 		if (lem->rooms)
 			lem->max_rooms *= 2;
 		if (!(new = (t_room*)ft_realloc(lem->rooms,
 			sizeof(*new) * (lem->max_rooms / 2),
-			sizeof(*new) * (lem->max_rooms + 1))))
+			sizeof(*new) * (lem->max_rooms))))
 			error_exit(lem);
 		lem->rooms = new;
 	}
-	lem->rooms[room.index - 1] = room;
+	lem->rooms[room.index] = room;
 	if (room.flag == LEM_START)
 		lem->start = room.index;
 	else if (room.flag == LEM_END)
