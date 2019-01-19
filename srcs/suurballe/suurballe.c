@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:17:26 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/18 17:31:05 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/19 18:19:04 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	reset_map(t_lem *lem)
 	}
 }
 
- void	prepare_suurballe(t_lem *lem)
+static void	prepare_suurballe(t_lem *lem)
 {
 	size_t	i;
 	int		j;
@@ -39,14 +39,14 @@ static void	reset_map(t_lem *lem)
 	if (!lem->paths)
 		return ;
 	i = 0;
-	while (lem->paths[i])
+	while (i < lem->nb_paths)
 	{
 		j = 1;
 		while (j < lem->paths[i][0])
 		{
-			room_del_connections(&lem->rooms[lem->paths[i][j] - 1],
+			room_del_connections(&lem->rooms[lem->paths[i][j]],
 			lem->paths[i][j + 1]);
-			lem->rooms[lem->paths[i][j + 1] - 1].reverse = lem->paths[i][j];
+			lem->rooms[lem->paths[i][j + 1]].reverse = lem->paths[i][j];
 			j++;
 		}
 		i++;
@@ -54,8 +54,21 @@ static void	reset_map(t_lem *lem)
 }
 
 /*
-** TODO: Connect paths containing negative weights before adding to lem;
-** lem normalizes path
+** TODO: path linking
+*/
+
+static void	process_new_path(t_lem *lem, t_paths found)
+{
+	while (!is_path_clean(found))
+	{
+		ft_printf("UNCLEAN PATH\n");
+		break ;
+	}
+	lem_path_add(lem, found, NULL);
+}
+
+/*
+** TODO: create stop condition ex -> path_finding.c should_continue
 */
 
 void		suurballe(t_lem *lem)
@@ -74,7 +87,8 @@ void		suurballe(t_lem *lem)
 		last = bfs(lem);
 		if (last)
 		{
-			lem_path_add(lem, last, NULL);
+			print_path(lem, last);
+			process_new_path(lem, last);
 			print_path(lem, last);
 			reset_map(lem);
 		}

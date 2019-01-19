@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/18 17:19:13 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/19 18:13:02 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void		room_del_connections(t_room *room, int id);
 void		prepare_map(t_lem *lem);
 void		suurballe(t_lem *lem);
 void		normalize_path(t_paths path);
+int			is_path_clean(t_paths path);
 
 /*
 ** Free
