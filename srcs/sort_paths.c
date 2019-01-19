@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:21:28 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/07 23:20:36 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/19 18:13:41 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static size_t	partition(t_paths *paths, size_t low, size_t high)
 {
-	size_t	pivot;
+	int		pivot;
 	size_t	i;
 	size_t	left;
 
-	pivot = path_len(paths[low]);
+	pivot = paths[low][0];
 	left = low;
 	i = low + 1;
 	while (i < high)
 	{
-		if (path_len(paths[i]) < pivot)
+		if (paths[i][0] < pivot)
 			ft_memswap(&paths[i], &paths[++left], sizeof(paths[0]));
 		i++;
 	}

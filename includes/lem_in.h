@@ -95,7 +95,7 @@ void		room_add_connections(t_lem *lem, t_room *room, int id);
 int			is_valid_room_format(char *str);
 int			is_valid_conn_format(char *str);
 int			lem_is_valid(t_lem *lem);
-size_t		path_len(t_paths path);
+// size_t		path_len(t_paths path);
 t_paths		path_add(t_paths path, int index);
 int			path_passes_through(t_paths path, int room_index);
 void		del_path(void *elem, size_t content_size);
