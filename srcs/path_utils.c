@@ -6,16 +6,11 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 14:32:50 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/19 18:07:06 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/19 18:28:20 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-size_t	path_len(t_paths path)
-{
-	return ((size_t)path[0]);
-}
 
 int		path_passes_through(t_paths path, int room_index)
 {
@@ -46,7 +41,7 @@ t_paths	path_add(t_paths path, int room_index)
 	t_paths	new;
 	size_t	pathlen;
 
-	pathlen = path_len(path) + 1;
+	pathlen = path[0] + 1;
 	if (!(new = (t_paths)ft_memalloc(sizeof(*new) * (pathlen + 1))))
 		return (NULL);
 	new[0] = pathlen;
