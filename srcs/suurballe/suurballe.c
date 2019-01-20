@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:17:26 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/20 18:35:12 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/20 23:27:14 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void		suurballe(t_lem *lem)
 	last = bfs(lem);
 	if (!last)
 		return ;
+	ft_printf("NEEDED LINES %zu\n", calc_needed_lines(lem));
 	lem_path_add(lem, last, NULL);
 	prepare_map(lem);
 	// print_path(lem, last);
@@ -88,6 +89,8 @@ void		suurballe(t_lem *lem)
 			process_new_path(lem, last);
 			reset_map(lem);
 		}
+		sort_paths(lem->paths, lem->nb_paths);
+		ft_printf("NEEDED LINES %zu\n", calc_needed_lines(lem));
 	}
 	ft_putstr("end suurballe\n");
 }

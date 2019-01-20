@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/20 18:21:21 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/20 23:22:57 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ t_paths		join_paths(t_lem *lem, t_paths first,
 	t_paths second, int join_room);
 t_paths		join_paths2(t_lem *lem, t_paths first,
 	t_paths second, int join_room);
+size_t		calc_needed_lines(t_lem *lem);
 
 /*
 ** Free
