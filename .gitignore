@@ -51,6 +51,6 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-lem_in
+lem-in
 .DS_STORE
 map

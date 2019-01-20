@@ -6,11 +6,11 @@
 #    By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/25 13:02:54 by wbraeckm          #+#    #+#              #
-#    Updated: 2019/01/18 17:00:00 by wbraeckm         ###   ########.fr        #
+#    Updated: 2019/01/20 16:06:04 by wbraeckm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = lem_in
+NAME = lem-in
 CC = gcc
 FLAGS = -O3 -Wall -Wextra -Werror #-fsanitize=address
 INCLUDES = ./includes/
