@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:53:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/19 18:02:41 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/20 18:24:19 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	free_lem(t_lem *lem)
 		free_rooms(lem);
 	if (lem && lem->hash_table)
 		free(lem->hash_table);
-	if (lem && lem->solve)
-		free(lem->solve);
+	// if (lem && lem->solve)
+	// 	free(lem->solve);
 	if (lem && lem->paths)
 		free_paths(lem);
 }

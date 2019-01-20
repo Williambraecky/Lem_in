@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:17:26 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/19 18:19:04 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/20 18:35:12 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	reset_map(t_lem *lem)
 			sizeof(*(current->origin)) * (current->origin_conn));
 		current->nb_conn = current->origin_conn;
 		current->used = 0;
-		current->reverse = 0;
+		current->reverse = -1;
 		i++;
 	}
 }
@@ -59,11 +59,8 @@ static void	prepare_suurballe(t_lem *lem)
 
 static void	process_new_path(t_lem *lem, t_paths found)
 {
-	while (!is_path_clean(found))
-	{
-		ft_printf("UNCLEAN PATH\n");
-		break ;
-	}
+	if (!is_path_clean(found))
+		found = handle_conflict(lem, found);
 	lem_path_add(lem, found, NULL);
 }
 
@@ -80,17 +77,17 @@ void		suurballe(t_lem *lem)
 		return ;
 	lem_path_add(lem, last, NULL);
 	prepare_map(lem);
-	print_path(lem, last);
+	// print_path(lem, last);
 	while (last)
 	{
 		prepare_suurballe(lem);
 		last = bfs(lem);
 		if (last)
 		{
-			print_path(lem, last);
+			// print_path(lem, last);
 			process_new_path(lem, last);
-			print_path(lem, last);
 			reset_map(lem);
 		}
 	}
+	ft_putstr("end suurballe\n");
 }

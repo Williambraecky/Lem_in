@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/19 18:10:07 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/20 16:47:01 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	add_tube(t_lem *lem, char *str)
 	*tmp = '-';
 }
 
-void	post_rooms(t_lem *lem)
+static void	post_rooms(t_lem *lem)
 {
 	size_t	i;
 	size_t	j;
@@ -85,6 +85,7 @@ static void	add_room(t_lem *lem, char *str, int *flag, int index)
 	if (!(split = ft_strsplit(str, ' ')))
 		error_exit(lem);
 	ft_memset(&room, 0, sizeof(room));
+	room.reverse = -1;
 	room.name = split[0];
 	room.index = index;
 	room.x = ft_atoi(split[1]);

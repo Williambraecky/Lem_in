@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:11:16 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/19 18:10:45 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/20 16:48:11 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ static void		add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 
 static int		should_follow(t_paths path, t_room *check, t_room *from)
 {
-	if ((check->nb_conn < 2 && !check->reverse)|| check->used != 0
-		|| path_passes_through(path, check->index)
-		|| (from->reverse && from->reverse != check->index
+	if ((check->nb_conn < 2 && !check->reverse) || check->used != 0
+		|| (from->reverse != -1 && from->reverse != check->index
 			&& !(path[*path] & REVERSE_FLAG)))
 		return (0);
 	check->used++;
@@ -104,6 +103,8 @@ t_paths			bfs(t_lem *lem)
 	while (*paths && !found)
 	{
 		current = (t_paths)*((void**)paths[0]->content);
+		// ft_printf("TRYING ");
+		// print_path(lem, current);
 		found = add_new_paths(lem, paths, current,
 			&lem->rooms[(current[*current] & NO_FLAG)]);
 		ft_lstpop(paths, del_path);

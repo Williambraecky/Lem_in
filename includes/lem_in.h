@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/19 18:13:02 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/20 18:21:21 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ struct		s_lem
 	size_t	nb_rooms;
 	t_paths	*paths;
 	size_t	nb_paths;
-	t_paths	*solve;
+	// t_paths	*solve;
 	size_t	ant_count;
 	size_t	current_bandwidth;
 	size_t	current_lines;
@@ -95,7 +95,6 @@ void		room_add_connections(t_lem *lem, t_room *room, int id);
 int			is_valid_room_format(char *str);
 int			is_valid_conn_format(char *str);
 int			lem_is_valid(t_lem *lem);
-// size_t		path_len(t_paths path);
 t_paths		path_add(t_paths path, int index);
 int			path_passes_through(t_paths path, int room_index);
 void		del_path(void *elem, size_t content_size);
@@ -116,6 +115,11 @@ void		prepare_map(t_lem *lem);
 void		suurballe(t_lem *lem);
 void		normalize_path(t_paths path);
 int			is_path_clean(t_paths path);
+t_paths		handle_conflict(t_lem *lem, t_paths path);
+t_paths		join_paths(t_lem *lem, t_paths first,
+	t_paths second, int join_room);
+t_paths		join_paths2(t_lem *lem, t_paths first,
+	t_paths second, int join_room);
 
 /*
 ** Free

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/19 18:16:50 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/20 18:38:38 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // 	size_t	i;
 // 	int		ret;
 //
-// 	i = path_len(path);
+// 	i = path[0];
 // 	ret = 0;
 // 	while (i-- > 1)
 // 	{
@@ -33,7 +33,7 @@
 // 			move_ant(current2, current);
 // 		else if (current2->flag == LEM_START &&
 // 			current2->ant != lem->ant_count &&
-// 			(force || path_len(path) <= lem->current_lines - line + 1))
+// 			(force || (size_t)path[0] <= lem->current_lines - line + 1))
 // 		{
 // 			ret = 1;
 // 			move_ant(current2, current);
@@ -50,7 +50,7 @@
 // 	size_t	line;
 // 	int		prev;
 //
-// 	if (!lem->solve)
+// 	if (!lem->paths)
 // 		return ;
 // 	end = &lem->rooms[lem->end];
 // 	start = &lem->rooms[lem->start];
@@ -58,10 +58,10 @@
 // 	while (end->ant < lem->ant_count)
 // 	{
 // 		i = 0;
-// 		while (lem->solve[i])
+// 		while (i < lem->nb_paths)
 // 		{
-// 			prev = move_ants_on_path(lem, lem->solve[i],
-// 			i == 0 || (prev && lem->solve[i - 1][0] == lem->solve[i][0]), line);
+// 			prev = move_ants_on_path(lem, lem->paths[i],
+// 			i == 0 || (prev && lem->paths[i - 1][0] == lem->paths[i][0]), line);
 // 			i++;
 // 		}
 // 		line++;
@@ -74,7 +74,7 @@
 int		main(int argc __attribute__((unused)), char **argv)
 {
 	t_lem	lem;
-	// size_t	i;
+	size_t	i;
 
 	(void)argv;
 	if (argc != 1)
@@ -90,13 +90,13 @@ int		main(int argc __attribute__((unused)), char **argv)
 								lem.rooms[lem.end].nb_conn);
 	buffer_flush();
 	suurballe(&lem);
-
-	// find_smallest_paths(&lem);
-	// sort_paths(lem.solve, lem.current_max_throughput);
-	// i = 0;
-	// while (lem.paths && lem.paths[i])
-	// 	print_path(&lem, lem.paths[i++]);
-	// buffer_putchar('\n');
+	sort_paths(lem.paths, lem.nb_paths);
+	// lem.current_lines = lem.paths[lem.nb_paths - 1][0];
+	lem.current_lines = 87;
+	i = 0;
+	while (lem.paths && lem.paths[i])
+		print_path(&lem, lem.paths[i++]);
+	buffer_putchar('\n');
 	// move_ants(&lem);
 	free_lem(&lem);
 	buffer_flush();
