@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:53:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/02 02:03:23 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/20 18:24:19 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void	free_rooms(t_lem *lem)
 	if (!lem->rooms)
 		return ;
 	i = 0;
-	while (lem->rooms[i].name)
+	while (i < lem->nb_rooms)
 	{
 		ft_strdel(&lem->rooms[i].name);
-		ft_memdel((void**)&lem->rooms[i].connections);
+		ft_memdel((void**)&(lem->rooms[i].connections));
+		ft_memdel((void**)&(lem->rooms[i].origin));
 		i++;
 	}
 	ft_memdel((void**)&(lem->rooms));
@@ -35,7 +36,19 @@ void	free_paths(t_lem *lem)
 	if (!lem->paths)
 		return ;
 	i = 0;
-	while (lem->paths[i])
+	while (i < lem->nb_paths)
 		ft_memdel((void**)&(lem->paths[i++]));
 	ft_memdel((void**)&(lem->paths));
+}
+
+void	free_lem(t_lem *lem)
+{
+	if (lem && lem->rooms)
+		free_rooms(lem);
+	if (lem && lem->hash_table)
+		free(lem->hash_table);
+	// if (lem && lem->solve)
+	// 	free(lem->solve);
+	if (lem && lem->paths)
+		free_paths(lem);
 }

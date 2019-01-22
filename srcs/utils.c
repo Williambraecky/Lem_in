@@ -6,46 +6,22 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:43:10 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/08 23:14:36 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/19 18:16:42 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int	check_connections(t_lem *lem, int id, size_t dist)
-{
-	t_room	*room;
-	size_t	i;
-
-	room = &lem->rooms[id - 1];
-	if (room_conn_contains(room, lem->end))
-		return (1);
-	i = 0;
-	room->used = 1;
-	room->dist = dist;
-	while (room->connections[i])
-	{
-		if (lem->rooms[room->connections[i] - 1].used == 0)
-			if (check_connections(lem, room->connections[i], dist + 1))
-				return (1);
-		i++;
-	}
-	return (0);
-}
-
 int			lem_is_valid(t_lem *lem)
 {
 	if (!lem->rooms)
 		return (0);
-	if (lem->start == 0 || lem->end == 0 || lem->ant_count <= 0)
+	if (lem->start == -1 || lem->end == -1 || lem->ant_count <= 0)
 		return (0);
-	if (lem->rooms[lem->start - 1].nb_conn == 0)
+	if (lem->rooms[lem->start].nb_conn == 0)
 		return (0);
-	if (lem->rooms[lem->end - 1].nb_conn == 0)
+	if (lem->rooms[lem->end].nb_conn == 0)
 		return (0);
-	if (!check_connections(lem, lem->start, 1))
-		return (0);
-	reset_room_used(lem);
 	return (1);
 }
 
@@ -86,14 +62,17 @@ void		move_ant(t_room *from, t_room *to)
 
 void		print_path(t_lem *lem, t_paths path)
 {
-	size_t	i;
+	int	i;
 
 	i = 1;
-	while (path[i])
+	while (i - 1 < path[0])
 	{
-		ft_printf("%s", lem->rooms[path[i++] - 1].name);
-		if (path[i])
+		ft_printf("%s", lem->rooms[(path[i] & NO_FLAG)].name);
+		if (path[i] & REVERSE_FLAG)
+			ft_printf("(uc)");
+		if (i != path[0])
 			ft_printf("->");
+		i++;
 	}
 	ft_printf("\n");
 }

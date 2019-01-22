@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/12/08 17:22:31 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/01/20 16:47:01 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	add_tube(t_lem *lem, char *str)
 	*tmp = '-';
 }
 
-void	post_rooms(t_lem *lem)
+static void	post_rooms(t_lem *lem)
 {
 	size_t	i;
 	size_t	j;
@@ -41,7 +41,7 @@ void	post_rooms(t_lem *lem)
 	(lem->nb_rooms * 2))))
 		error_exit(lem);
 	i = 0;
-	while (lem->rooms[i].name)
+	while (i < lem->nb_rooms)
 	{
 		j = lem->rooms[i].hash % (lem->nb_rooms * 2);
 		while (lem->hash_table[j])
@@ -84,16 +84,14 @@ static void	add_room(t_lem *lem, char *str, int *flag, int index)
 
 	if (!(split = ft_strsplit(str, ' ')))
 		error_exit(lem);
+	ft_memset(&room, 0, sizeof(room));
+	room.reverse = -1;
 	room.name = split[0];
 	room.index = index;
 	room.x = ft_atoi(split[1]);
 	room.y = ft_atoi(split[2]);
 	room.flag = *flag;
 	*flag = 0;
-	room.ant = 0;
-	room.connections = NULL;
-	room.max_conn = 0;
-	room.nb_conn = 0;
 	ft_strdel(&split[1]);
 	ft_strdel(&split[2]);
 	ft_memdel((void**)&split);
@@ -116,7 +114,7 @@ static void	parse_rooms(t_lem *lem)
 		else if (ft_strequ(str, "##end"))
 			flag = LEM_END;
 		if (*str != '#')
-			add_room(lem, str, &flag, ++lem->nb_rooms);
+			add_room(lem, str, &flag, lem->nb_rooms++);
 		ft_strdel(&str);
 	}
 	if (ret == -1)
