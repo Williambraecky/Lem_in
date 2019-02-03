@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 17:19:11 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/20 23:24:14 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/02 23:33:45 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ size_t		calc_needed_lines(t_lem *lem)
 
 	if (!lem->paths)
 		return (0);
-	line = (size_t)lem->paths[0][0];
+	line = (size_t)lem->paths[0][0] - 1;
 	while (compute_bandwidth(lem, line) < lem->ant_count)
 		line++;
 	return (line);
