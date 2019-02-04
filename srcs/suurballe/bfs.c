@@ -6,11 +6,32 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:11:16 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/20 16:48:11 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/04 13:39:02 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+static void		add_to_list(t_list **list, t_list *new_node, int is_reverse)
+{
+	if (!(*list))
+	{
+		*list = new_node;
+		list[1] = new_node;
+	}
+	else if (is_reverse)
+	{
+		new_node->next = list[0]->next;
+		list[0]->next = new_node;
+		if (new_node->next == NULL)
+			list[1] = new_node;
+	}
+	else
+	{
+		list[1]->next = new_node;
+		list[1] = new_node;
+	}
+}
 
 static void		add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 {
@@ -24,23 +45,7 @@ static void		add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 		error_exit(lem);
 		return ;
 	}
-	if (!(*list))
-	{
-		*list = new_node;
-		list[1] = new_node;
-	}
-	else if (index & REVERSE_FLAG)
-	{
-		new_node->next = list[0]->next;
-		list[0]->next = new_node;
-		if (new_node->next == NULL)
-			list[1] = new_node;
-	}
-	else
-	{
-		list[1]->next = new_node;
-		list[1] = new_node;
-	}
+	add_to_list(list, new_node, index & REVERSE_FLAG);
 }
 
 /*

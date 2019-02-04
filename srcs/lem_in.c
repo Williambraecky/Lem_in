@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/20 23:23:51 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/04 13:47:05 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** PROTOTYPE
 */
 
- int	move_ants_on_path(t_lem *lem, t_paths path, int force, size_t line)
+static int	move_ants_on_path(t_lem *lem, t_paths path, int force, size_t line)
 {
 	t_room	*current;
 	t_room	*current2;
@@ -42,7 +42,7 @@
 	return (ret);
 }
 
- void	move_ants(t_lem *lem)
+static void	move_ants(t_lem *lem)
 {
 	t_room	*end;
 	t_room	*start;
@@ -74,7 +74,7 @@
 int		main(int argc __attribute__((unused)), char **argv)
 {
 	t_lem	lem;
-	size_t	i;
+	// size_t	i;
 
 	(void)argv;
 	if (argc != 1)
@@ -92,14 +92,14 @@ int		main(int argc __attribute__((unused)), char **argv)
 	suurballe(&lem);
 	sort_paths(lem.paths, lem.nb_paths);
 	// lem.current_lines = lem.paths[lem.nb_paths - 1][0];
-	lem.current_lines = 75;
-	i = 0;
-	while (lem.paths && lem.paths[i])
-		print_path(&lem, lem.paths[i++]);
-	ft_printf("NEEDED LINES %zu\n", calc_needed_lines(&lem));
+	lem.current_lines = calc_needed_lines(&lem);
+	// i = 0;
+	// while (lem.paths && lem.paths[i])
+	// 	print_path(&lem, lem.paths[i++]);
 	buffer_putchar('\n');
-	// move_ants(&lem);
-	free_lem(&lem);
+	move_ants(&lem);
 	buffer_flush();
+	ft_printf("NEEDED LINES %zu\n", calc_needed_lines(&lem));
+	free_lem(&lem);
 	return (0);
 }
