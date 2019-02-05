@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:17:26 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/20 23:34:25 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/05 22:10:29 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,25 @@ static void	prepare_suurballe(t_lem *lem)
 static void	process_new_path(t_lem *lem, t_paths found)
 {
 	if (!is_path_clean(found))
+	{
+		ft_printf("UNCLEAN PATH\n");
 		found = handle_conflict(lem, found);
+	}
 	lem_path_add(lem, found, NULL);
+}
+
+static void	stuff(t_lem *lem)
+{
+	size_t	i;
+
+	i = 0;
+	ft_printf("Nb paths; %zu\n", lem->nb_paths);
+	while (i < lem->nb_paths)
+	{
+		// ft_printf("%zu length : %d\n", i, lem->paths[i][0]);
+		// print_path(lem, lem->paths[i]);
+		i++;
+	}
 }
 
 /*
@@ -72,25 +89,35 @@ void		suurballe(t_lem *lem)
 {
 	t_paths	last;
 
-	last = bfs(lem);
+	if (lem->mode)
+		last = bfs(lem);
+	else
+		last = reverse_bfs(lem);
 	if (!last)
 		return ;
 	lem_path_add(lem, last, NULL);
 	ft_printf("NEEDED LINES %zu\n", calc_needed_lines(lem));
+	stuff(lem);
 	prepare_map(lem);
 	// print_path(lem, last);
 	while (last)
 	{
 		prepare_suurballe(lem);
-		last = bfs(lem);
+		if (lem->mode)
+			last = bfs(lem);
+		else
+			last = reverse_bfs(lem);
 		if (last)
 		{
+			// ft_printf("\n\nnew\n");
 			// print_path(lem, last);
 			process_new_path(lem, last);
 			reset_map(lem);
+			sort_paths(lem->paths, lem->nb_paths);
+			ft_printf("NEEDED LINES %zu\n", calc_needed_lines(lem));
+			stuff(lem);
 		}
-		sort_paths(lem->paths, lem->nb_paths);
-		ft_printf("NEEDED LINES %zu\n", calc_needed_lines(lem));
 	}
+	reset_map(lem);
 	ft_putstr("end suurballe\n");
 }

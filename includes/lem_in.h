@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/20 23:22:57 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/05 22:05:36 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ struct		s_room
 typedef struct s_lem	t_lem;
 struct		s_lem
 {
+	int		mode;
 	t_room	*rooms;
 	t_room	**hash_table;
 	size_t	max_rooms;
@@ -110,6 +111,7 @@ size_t		simple_hash(char *str);
 void		sort_paths(t_paths *paths, size_t nb_paths);
 void		reset_room_used(t_lem *lem);
 t_paths		bfs(t_lem *lem);
+t_paths		reverse_bfs(t_lem *lem);
 void		room_del_connections(t_room *room, int id);
 void		prepare_map(t_lem *lem);
 void		suurballe(t_lem *lem);

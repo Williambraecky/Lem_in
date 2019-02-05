@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bfs.c                                              :+:      :+:    :+:   */
+/*   reverse_bfs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/18 14:11:16 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/05 21:54:46 by wbraeckm         ###   ########.fr       */
+/*   Created: 2019/02/05 21:52:35 by wbraeckm          #+#    #+#             */
+/*   Updated: 2019/02/05 22:02:56 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
 
 static int		calc_len(t_paths path)
 {
@@ -122,9 +123,9 @@ static t_paths	add_new_paths(t_lem *lem, t_list **list, t_paths path,
 
 	if (!room->connections)
 		return (NULL);
-	if (room_conn_contains(room, lem->end))
+	if (room_conn_contains(room, lem->start))
 	{
-		if (!(found = path_add(path, lem->end)))
+		if (!(found = path_add(path, lem->start)))
 		{
 			ft_lstdel(list, del_path);
 			error_exit(lem);
@@ -143,7 +144,18 @@ static t_paths	add_new_paths(t_lem *lem, t_list **list, t_paths path,
 	return (NULL);
 }
 
-t_paths			bfs(t_lem *lem)
+// static void		reverse_path(t_paths path)
+// {
+// 	t_paths start;
+// 	t_paths end;
+//
+// 	start = path + 1;
+// 	end = path + path[0];
+// 	while (start < end)
+// 		ft_swapint(start++, end--);
+// }
+
+t_paths			reverse_bfs(t_lem *lem)
 {
 	t_list	*paths[2];
 	t_paths	current;
@@ -151,8 +163,8 @@ t_paths			bfs(t_lem *lem)
 
 	paths[0] = NULL;
 	paths[1] = NULL;
-	current = new_path(lem, lem->start);
-	found = add_new_paths(lem, paths, current, &lem->rooms[lem->start]);
+	current = new_path(lem, lem->end);
+	found = add_new_paths(lem, paths, current, &lem->rooms[lem->end]);
 	free(current);
 	// int min_len;
 	while (*paths && !found)
@@ -168,6 +180,10 @@ t_paths			bfs(t_lem *lem)
 			&lem->rooms[(current[*current] & NO_FLAG)]);
 		ft_lstpop(paths, del_path);
 	}
+	// print_path(lem, found);
+	// if (found)
+	// 	reverse_path(found);
+	// print_path(lem, found);
 	if (*paths)
 		ft_lstdel(paths, del_path);
 	return (found);

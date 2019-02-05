@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/20 23:23:51 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/05 22:28:30 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,10 @@ int		main(int argc __attribute__((unused)), char **argv)
 	size_t	i;
 
 	(void)argv;
-	if (argc != 1)
-		error_exit(NULL);
+	// if (argc != 1)
+	// 	error_exit(NULL);
 	ft_memset(&lem, 0, sizeof(lem));
+	lem.mode = argc == 1;
 	lem.start = -1;
 	lem.end = -1;
 	parse_lemin(&lem);
@@ -94,12 +95,14 @@ int		main(int argc __attribute__((unused)), char **argv)
 	// lem.current_lines = lem.paths[lem.nb_paths - 1][0];
 	lem.current_lines = 75;
 	i = 0;
-	while (lem.paths && lem.paths[i])
-		print_path(&lem, lem.paths[i++]);
+	// while (lem.paths && lem.paths[i])
+	// 	print_path(&lem, lem.paths[i++]);
 	ft_printf("NEEDED LINES %zu\n", calc_needed_lines(&lem));
 	buffer_putchar('\n');
 	// move_ants(&lem);
-	free_lem(&lem);
 	buffer_flush();
+	ft_printf("start: %zu; end: %zu\n", lem.rooms[lem.start].nb_conn,
+										lem.rooms[lem.end].nb_conn);
+	free_lem(&lem);
 	return (0);
 }
