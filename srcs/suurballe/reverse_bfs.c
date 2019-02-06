@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 21:52:35 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/06 16:00:23 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/06 16:26:57 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ static int		calc_len(t_paths path)
 	while (i - 1 < path[0])
 	{
 		if (path[i] & REVERSE_FLAG)
-		{
-			if (!(path[i] & REVERSE_FLAG))
-				len--;
 			len--;
-		}
 		i++;
 	}
 	return (len);
