@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:17:26 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/05 22:10:29 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/06 15:55:54 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ static void	process_new_path(t_lem *lem, t_paths found)
 {
 	if (!is_path_clean(found))
 	{
-		ft_printf("UNCLEAN PATH\n");
-		found = handle_conflict(lem, found);
+		found = handle_conflict(lem, found, -1);
 	}
 	lem_path_add(lem, found, NULL);
 }
@@ -75,6 +74,8 @@ static void	stuff(t_lem *lem)
 	ft_printf("Nb paths; %zu\n", lem->nb_paths);
 	while (i < lem->nb_paths)
 	{
+		if (!is_path_clean(lem->paths[i]))
+			ft_printf("unclean path in solution\n");
 		// ft_printf("%zu length : %d\n", i, lem->paths[i][0]);
 		// print_path(lem, lem->paths[i]);
 		i++;

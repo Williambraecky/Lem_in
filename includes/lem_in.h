@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/05 22:05:36 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/06 15:54:06 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void		prepare_map(t_lem *lem);
 void		suurballe(t_lem *lem);
 void		normalize_path(t_paths path);
 int			is_path_clean(t_paths path);
-t_paths		handle_conflict(t_lem *lem, t_paths path);
+t_paths		handle_conflict(t_lem *lem, t_paths path, int path_index);
 t_paths		join_paths(t_lem *lem, t_paths first,
 	t_paths second, int join_room);
 t_paths		join_paths2(t_lem *lem, t_paths first,

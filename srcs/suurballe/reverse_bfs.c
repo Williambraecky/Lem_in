@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 21:52:35 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/05 22:02:56 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/06 16:00:23 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int		calc_len(t_paths path)
 
 	len = path[0];
 	i = 1;
-	while (i < path[0])
+	while (i - 1 < path[0])
 	{
 		if (path[i] & REVERSE_FLAG)
 		{
@@ -47,8 +47,11 @@ static void	lstsortinsert(t_list **begin_list, t_list *insert,
 	current = *begin_list;
 	if (current == NULL || cmp(current->content, insert->content) > 0)
 	{
-		insert->next = current;
-		*begin_list = insert;
+		insert->next = current != NULL ? current->next : NULL;
+		if (!current)
+			*begin_list = insert;
+		else
+			ft_printf("COUCOU\n");
 		return ;
 	}
 	prev = current;

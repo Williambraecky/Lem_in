@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:11:16 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/05 21:54:46 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/06 15:44:48 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ static void	lstsortinsert(t_list **begin_list, t_list *insert,
 	current = *begin_list;
 	if (current == NULL || cmp(current->content, insert->content) > 0)
 	{
-		insert->next = current;
-		*begin_list = insert;
+		insert->next = current != NULL ? current->next : NULL;
+		if (!current)
+			*begin_list = insert;
 		return ;
 	}
 	prev = current;
