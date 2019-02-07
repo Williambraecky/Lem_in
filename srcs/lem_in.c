@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 17:35:49 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:51:27 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int			main(int argc, char **argv)
 		lem.algo = bfs;
 	if (isatty(lem.fd))
 	{
-		ft_printf("Usage: ./lem-in < map\n");
+		error_message(&lem, "No map specified!");
 		return (0);
 	}
 	lem.mode = argc == 1;
