@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 13:40:13 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:00:00 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,15 @@
 # define LEM_ROOM_START 16
 # define LEM_CONN_START 3
 # define LEM_COMBO_START 10
+# define DICT_LEN_START 50
 # define MAX_PATHS 50
 
 # define REVERSE_FLAG (1 << 31)
 # define NO_FLAG 0x7FFFFFFF
+
+# define VERBOSE_FLAG (1 << 0)
+# define SHOW_FLAG (1 << 1)
+# define HIDE_FLAG (1 << 2)
 
 typedef int*	t_paths;
 
@@ -52,7 +57,15 @@ struct		s_room
 typedef struct s_lem	t_lem;
 struct		s_lem
 {
+	int		fd;
+	int		autonomy;
+	int		max_paths;
 	int		mode;
+	int		flags;
+	char	*line;
+	char	**dictionary;
+	size_t	dict_len;
+	size_t	max_dict_len;
 	t_room	*rooms;
 	t_room	**hash_table;
 	size_t	max_rooms;
@@ -102,7 +115,7 @@ t_paths		new_path(t_lem *lem, int start_index);
 void		print_path(t_lem *lem, t_paths path);
 int			calc_max_output(t_lem *lem);
 int			path_collide(t_paths path1, t_paths path2);
-void		move_ant(t_room *from, t_room *to);
+void		move_ant(t_lem *lem, t_room *from, t_room *to);
 size_t		compute_bandwidth(t_lem *lem, size_t nb_lines);
 size_t		simple_hash(char *str);
 void		sort_paths(t_paths *paths, size_t nb_paths);
@@ -125,13 +138,15 @@ int			calc_len(t_paths path);
 int			cmp_path(t_paths *a, t_paths *b);
 void		reset_map(t_lem *lem);
 void		prepare_suurballe(t_lem *lem);
+void		read_lem_opt(t_lem *lem, int argc, char **argv);
+void		error_usage(t_lem *lem);
+void		error_message(t_lem *lem, char *msg);
+void		read_dictionary(t_lem *lem, int *i, char **argv);
 
 /*
 ** Free
 */
 
-void		free_rooms(t_lem *lem);
-void		free_paths(t_lem *lem);
 void		del_combo(void *elem, size_t content_size);
 void		free_lem(t_lem *lem);
 

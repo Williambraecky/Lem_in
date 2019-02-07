@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 13:40:23 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:35:49 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static int	move_ants_on_path(t_lem *lem, t_paths path, int force, size_t line)
 		current = &lem->rooms[path[i + 1]];
 		current2 = &lem->rooms[path[i]];
 		if (current2->ant != 0 && current2->flag != LEM_START)
-			move_ant(current2, current);
+			move_ant(lem, current2, current);
 		else if (current2->flag == LEM_START &&
 			current2->ant != lem->ant_count &&
 			(force || (size_t)path[0] <= lem->current_lines - line + 1))
 		{
 			ret = 1;
-			move_ant(current2, current);
+			move_ant(lem, current2, current);
 		}
 	}
 	return (ret);
@@ -71,12 +71,39 @@ static void	move_ants(t_lem *lem)
 	buffer_putchar('\n');
 }
 
+static void	show_info(t_lem *lem)
+{
+	size_t	i;
+
+	if (!(lem->flags & SHOW_FLAG))
+		return ;
+	ft_printf("Number of paths: %zu\n", lem->nb_paths);
+	ft_printf("Number of ants: %zu\n\n", lem->ant_count);
+	i = 0;
+	while (i < lem->nb_paths)
+	{
+		ft_printf("Path number: %zu (length=%d)\n", i + 1, lem->paths[i][0]);
+		print_path(lem, lem->paths[i]);
+		ft_putchar('\n');
+		i++;
+	}
+	ft_printf("Needed lines: %zu\n", calc_needed_lines(lem));
+}
+
 int			main(int argc, char **argv)
 {
 	t_lem	lem;
 
 	(void)argv;
 	ft_memset(&lem, 0, sizeof(lem));
+	read_lem_opt(&lem, argc, argv);
+	if (!lem.algo)
+		lem.algo = bfs;
+	if (isatty(lem.fd))
+	{
+		ft_printf("Usage: ./lem-in < map\n");
+		return (0);
+	}
 	lem.mode = argc == 1;
 	if (lem.mode)
 		lem.algo = bfs;
@@ -91,9 +118,11 @@ int			main(int argc, char **argv)
 	buffer_flush();
 	suurballe(&lem);
 	sort_paths(lem.paths, lem.nb_paths);
+	show_info(&lem);
 	lem.current_lines = calc_needed_lines(&lem);
 	buffer_putchar('\n');
-	move_ants(&lem);
+	if (!(lem.flags & HIDE_FLAG))
+		move_ants(&lem);
 	buffer_flush();
 	free_lem(&lem);
 	return (0);

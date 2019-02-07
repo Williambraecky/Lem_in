@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 13:30:23 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:14:31 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,27 @@ static void	add_tube(t_lem *lem, char *str)
 	*tmp = '-';
 }
 
-/*
-** TODO: free str on error
-*/
-
-static void	parse_tubes(t_lem *lem, char *str)
+static void	parse_tubes(t_lem *lem)
 {
 	int	ret;
 
 	create_hash_table(lem);
-	if (!str || !is_valid_conn_format(str))
+	if (!lem->line || !is_valid_conn_format(lem->line))
 		error_exit(lem);
-	add_tube(lem, str);
-	ft_strdel(&str);
-	while ((ret = get_next_line(0, &str)) > 0)
+	add_tube(lem, lem->line);
+	ft_strdel(&lem->line);
+	while ((ret = get_next_line(lem->fd, &lem->line)) > 0)
 	{
-		if (!is_valid_conn_format(str))
+		if (!is_valid_conn_format(lem->line))
 			break ;
-		if (*str != '#')
-			add_tube(lem, str);
-		ft_strdel(&str);
+		if (*lem->line != '#')
+			add_tube(lem, lem->line);
+		ft_strdel(&lem->line);
 	}
-	if (str)
-		ft_strdel(&str);
-	while ((ret = get_next_line(0, &str)) > 0)
-		ft_strdel(&str);
+	if (lem->line)
+		ft_strdel(&lem->line);
+	while ((ret = get_next_line(lem->fd, &lem->line)) > 0)
+		ft_strdel(&lem->line);
 }
 
 static void	add_room(t_lem *lem, char *str, int *flag, int index)
@@ -82,39 +78,36 @@ static void	add_room(t_lem *lem, char *str, int *flag, int index)
 
 static void	parse_rooms(t_lem *lem)
 {
-	char	*str;
 	int		ret;
 	int		flag;
 
 	flag = 0;
-	while ((ret = get_next_line(0, &str)) > 0)
+	while ((ret = get_next_line(lem->fd, &lem->line)) > 0)
 	{
-		if (!is_valid_room_format(str))
+		if (!is_valid_room_format(lem->line))
 			break ;
-		if (ft_strequ(str, "##start"))
+		if (ft_strequ(lem->line, "##start"))
 			flag = LEM_START;
-		else if (ft_strequ(str, "##end"))
+		else if (ft_strequ(lem->line, "##end"))
 			flag = LEM_END;
-		if (*str != '#')
-			add_room(lem, str, &flag, lem->nb_rooms++);
-		ft_strdel(&str);
+		if (*lem->line != '#')
+			add_room(lem, lem->line, &flag, lem->nb_rooms++);
+		ft_strdel(&lem->line);
 	}
 	if (ret == -1)
 		error_exit(lem);
-	parse_tubes(lem, str);
+	parse_tubes(lem);
 }
 
 /*
-** Handle comments before nb_ant
+** TODO: Handle comments before nb_ant
 */
 
 void		parse_lemin(t_lem *lem)
 {
-	char	*str;
-
-	if (get_next_line(0, &str) != 1 || !ft_strisnumber(str))
+	if (get_next_line(lem->fd, &lem->line) != 1 || !ft_strisnumber(lem->line))
 		error_exit(NULL);
-	lem->ant_count = ft_atol(str);
-	ft_strdel(&str);
+	lem->ant_count = ft_atol(lem->line);
+	ft_strdel(&lem->line);
 	parse_rooms(lem);
 }

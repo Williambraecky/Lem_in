@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 21:52:35 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 13:39:06 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:25:13 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ t_paths			reverse_bfs(t_lem *lem)
 	while (*paths && !found)
 	{
 		current = (t_paths)*((void**)paths[0]->content);
+		if (lem->autonomy != 0 && calc_len(current) - 1 > lem->autonomy)
+			break ;
 		found = add_new_paths(lem, paths, current,
 			&lem->rooms[(current[*current] & NO_FLAG)]);
 		ft_lstpop(paths, del_path);

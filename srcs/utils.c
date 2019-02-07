@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:43:10 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/19 18:16:42 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:01:34 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,20 @@ void		del_path(void *elem, size_t content_size)
 	free(elem);
 }
 
-void		move_ant(t_room *from, t_room *to)
+static void	buffer_putant(t_lem *lem, size_t ant)
+{
+	if (ant - 1 < lem->dict_len)
+		buffer_putstr(lem->dictionary[ant - 1]);
+	else
+		buffer_putnbr(ant);
+}
+
+void		move_ant(t_lem *lem, t_room *from, t_room *to)
 {
 	if (from->flag == LEM_START)
 		from->ant++;
 	buffer_putchar('L');
-	buffer_putnbr(from->ant);
+	buffer_putant(lem, from->ant);
 	buffer_putchar('-');
 	buffer_putstr(to->name);
 	buffer_putchar(' ');
