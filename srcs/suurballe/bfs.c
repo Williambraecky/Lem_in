@@ -6,34 +6,13 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:11:16 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/06 16:27:35 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/07 13:41:24 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int		calc_len(t_paths path)
-{
-	int	len;
-	int	i;
-
-	len = path[0];
-	i = 1;
-	while (i - 1 < path[0])
-	{
-		if (path[i] & REVERSE_FLAG)
-			len--;
-		i++;
-	}
-	return (len);
-}
-
-static int		cmp_path(t_paths *a, t_paths *b)
-{
-	return (ft_intcmp(calc_len(*a), calc_len(*b)));
-}
-
-static void	lstsortinsert(t_list **begin_list, t_list *insert,
+static void		lstsortinsert(t_list **begin_list, t_list *insert,
 		int (*cmp)())
 {
 	t_list *current;
@@ -61,7 +40,6 @@ static void	lstsortinsert(t_list **begin_list, t_list *insert,
 	prev->next = insert;
 }
 
-
 static void		add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 {
 	t_paths	new;
@@ -75,28 +53,7 @@ static void		add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 		return ;
 	}
 	lstsortinsert(list, new_node, cmp_path);
-	// if (!(*list))
-	// {
-	// 	*list = new_node;
-	// 	list[1] = new_node;
-	// }
-	// else if (index & REVERSE_FLAG)
-	// {
-	// 	new_node->next = list[0]->next;
-	// 	list[0]->next = new_node;
-	// 	if (new_node->next == NULL)
-	// 		list[1] = new_node;
-	// }
-	// else
-	// {
-	// 	list[1]->next = new_node;
-	// 	list[1] = new_node;
-	// }
 }
-
-/*
-** TODO: Handle negative links etc..
-*/
 
 static int		should_follow(t_paths path, t_room *check, t_room *from)
 {
@@ -151,16 +108,9 @@ t_paths			bfs(t_lem *lem)
 	current = new_path(lem, lem->start);
 	found = add_new_paths(lem, paths, current, &lem->rooms[lem->start]);
 	free(current);
-	// int min_len;
 	while (*paths && !found)
 	{
 		current = (t_paths)*((void**)paths[0]->content);
-		// if (calc_len(current) < min_len)
-		// 	ft_printf("This is the problem\n");
-		// else
-		// 	min_len = calc_len(current);
-		// ft_printf("TRYING ");
-		// print_path(lem, current);
 		found = add_new_paths(lem, paths, current,
 			&lem->rooms[(current[*current] & NO_FLAG)]);
 		ft_lstpop(paths, del_path);

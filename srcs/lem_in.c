@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/05 22:28:30 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/07 13:40:23 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** PROTOTYPE
 */
 
- int	move_ants_on_path(t_lem *lem, t_paths path, int force, size_t line)
+static int	move_ants_on_path(t_lem *lem, t_paths path, int force, size_t line)
 {
 	t_room	*current;
 	t_room	*current2;
@@ -42,7 +42,7 @@
 	return (ret);
 }
 
- void	move_ants(t_lem *lem)
+static void	move_ants(t_lem *lem)
 {
 	t_room	*end;
 	t_room	*start;
@@ -71,38 +71,30 @@
 	buffer_putchar('\n');
 }
 
-int		main(int argc __attribute__((unused)), char **argv)
+int			main(int argc, char **argv)
 {
 	t_lem	lem;
-	size_t	i;
 
 	(void)argv;
-	// if (argc != 1)
-	// 	error_exit(NULL);
 	ft_memset(&lem, 0, sizeof(lem));
 	lem.mode = argc == 1;
+	if (lem.mode)
+		lem.algo = bfs;
+	else
+		lem.algo = reverse_bfs;
 	lem.start = -1;
 	lem.end = -1;
 	parse_lemin(&lem);
 	if (!lem_is_valid(&lem))
 		error_exit(&lem);
 	buffer_putchar('\n');
-	lem.max_throughput = ft_min(lem.rooms[lem.start].nb_conn,
-								lem.rooms[lem.end].nb_conn);
 	buffer_flush();
 	suurballe(&lem);
 	sort_paths(lem.paths, lem.nb_paths);
-	// lem.current_lines = lem.paths[lem.nb_paths - 1][0];
-	lem.current_lines = 75;
-	i = 0;
-	// while (lem.paths && lem.paths[i])
-	// 	print_path(&lem, lem.paths[i++]);
-	ft_printf("NEEDED LINES %zu\n", calc_needed_lines(&lem));
+	lem.current_lines = calc_needed_lines(&lem);
 	buffer_putchar('\n');
-	// move_ants(&lem);
+	move_ants(&lem);
 	buffer_flush();
-	ft_printf("start: %zu; end: %zu\n", lem.rooms[lem.start].nb_conn,
-										lem.rooms[lem.end].nb_conn);
 	free_lem(&lem);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/20 16:47:01 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/07 13:30:23 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,15 @@ static void	add_tube(t_lem *lem, char *str)
 	*tmp = '-';
 }
 
-static void	post_rooms(t_lem *lem)
-{
-	size_t	i;
-	size_t	j;
-
-	if (!(lem->hash_table = ft_memalloc(sizeof(t_room*) *
-	(lem->nb_rooms * 2))))
-		error_exit(lem);
-	i = 0;
-	while (i < lem->nb_rooms)
-	{
-		j = lem->rooms[i].hash % (lem->nb_rooms * 2);
-		while (lem->hash_table[j])
-		{
-			j++;
-			if (j == (lem->nb_rooms * 2))
-				j = 0;
-		}
-		lem->hash_table[j] = &lem->rooms[i++];
-	}
-}
+/*
+** TODO: free str on error
+*/
 
 static void	parse_tubes(t_lem *lem, char *str)
 {
 	int	ret;
 
-	post_rooms(lem);
+	create_hash_table(lem);
 	if (!str || !is_valid_conn_format(str))
 		error_exit(lem);
 	add_tube(lem, str);

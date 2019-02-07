@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/06 15:54:06 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/07 13:40:13 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,11 @@ struct		s_lem
 	size_t	nb_rooms;
 	t_paths	*paths;
 	size_t	nb_paths;
-	// t_paths	*solve;
 	size_t	ant_count;
-	size_t	current_bandwidth;
 	size_t	current_lines;
-	size_t	max_throughput;
-	size_t	current_max_throughput;
 	int		start;
 	int		end;
+	t_paths	(*algo)(t_lem *lem);
 };
 
 /*
@@ -123,6 +120,11 @@ t_paths		join_paths(t_lem *lem, t_paths first,
 t_paths		join_paths2(t_lem *lem, t_paths first,
 	t_paths second, int join_room);
 size_t		calc_needed_lines(t_lem *lem);
+void		create_hash_table(t_lem *lem);
+int			calc_len(t_paths path);
+int			cmp_path(t_paths *a, t_paths *b);
+void		reset_map(t_lem *lem);
+void		prepare_suurballe(t_lem *lem);
 
 /*
 ** Free

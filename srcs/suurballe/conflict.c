@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 16:05:03 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/06 16:09:25 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/07 13:35:20 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ static t_paths	remove_conflict(t_lem *lem, t_paths *path,
 	end = calc_conflict_end(*path, conflict, index);
 	new = join_paths(lem, *path, conflict, path[0][index]);
 	new2 = join_paths2(lem, conflict, path[0], path[0][end - 1] & NO_FLAG);
-	// print_path(lem, new);
-	// print_path(lem, new2);
 	free(*path);
 	*path = new;
 	return (new2);
@@ -80,8 +78,6 @@ t_paths			handle_conflict(t_lem *lem, t_paths path, int path_index)
 	size_t	conflict_path;
 	int		index;
 
-	// ft_printf("Trying to handle conflict for ");
-	// print_path(lem, path);
 	conflict_path = find_conflict(lem, path, &index);
 	if (conflict_path == lem->nb_paths)
 		return (path);
