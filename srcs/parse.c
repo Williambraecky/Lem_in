@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/08 17:12:23 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 17:33:23 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,6 @@ static void	parse_rooms(t_lem *lem)
 		error_exit(lem);
 	parse_tubes(lem);
 }
-
-/*
-** TODO: Handle comments before nb_ant and if ants is negative
-*/
 
 void		parse_lemin(t_lem *lem)
 {

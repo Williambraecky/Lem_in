@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:17:26 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/08 17:15:53 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 17:33:22 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,6 @@ static void	reverse_path(t_paths path)
 	while (start < end)
 		ft_swapint(start++, end--);
 }
-
-/*
-** TODO: create stop condition ex -> path_finding.c should_continue
-*/
 
 static int	should_continue(t_lem *lem)
 {

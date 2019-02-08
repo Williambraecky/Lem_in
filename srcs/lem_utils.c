@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/08 16:44:35 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 17:33:28 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,6 @@ void	reset_room_used(t_lem *lem)
 	while (i < lem->nb_rooms)
 		lem->rooms[i++].used = 0;
 }
-
-/*
-** TODO: Handle rooms room with same x y or name is already present
-*/
 
 void	lem_add_room(t_lem *lem, t_room room)
 {
