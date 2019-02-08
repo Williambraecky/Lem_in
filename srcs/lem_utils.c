@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:48:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/19 18:15:27 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 16:44:35 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_room	*lem_get_room_name(t_lem *lem, char *str)
 	orig = j;
 	while (1)
 	{
-		if (hash == lem->hash_table[j]->hash &&
+		if (lem->hash_table[j] && hash == lem->hash_table[j]->hash &&
 			ft_strcmp(lem->hash_table[j]->name, str) == 0)
 			return (lem->hash_table[j]);
 		j++;

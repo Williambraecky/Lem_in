@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:53:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/08 15:49:50 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 16:39:58 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	free_dictionary(t_lem *lem)
 
 void		free_lem(t_lem *lem)
 {
-	if (lem->fd)
+	if (lem && lem->fd)
 		close(lem->fd);
 	if (lem && lem->rooms)
 		free_rooms(lem);

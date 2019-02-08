@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 15:44:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 17:45:08 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 16:52:31 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		read_dictionary(t_lem *lem, int *i, char **argv)
 	if ((fd = open(argv[*i], O_RDONLY)) == -1)
 		error_message(lem, "Could not open file");
 	ft_printf("Dictionary \"%s\":\n", argv[*i]);
-	while ((ret = get_next_line(fd, &lem->line)))
+	while ((ret = get_next_line(fd, &lem->line)) == 1)
 	{
 		ensure_enough_space(lem, fd);
 		lem->dictionary[lem->dict_len++] = lem->line;

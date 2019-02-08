@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 13:27:33 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 13:29:59 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 16:42:01 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	create_hash_table(t_lem *lem)
 	size_t	i;
 	size_t	j;
 
+	if (lem->nb_rooms == 0)
+		error_exit(lem);
 	if (!(lem->hash_table = ft_memalloc(sizeof(t_room*) *
 	(lem->nb_rooms * 2))))
 		error_exit(lem);

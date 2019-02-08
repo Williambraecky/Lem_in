@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:45:59 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 17:14:31 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 17:12:23 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ static void	add_tube(t_lem *lem, char *str)
 	room1 = lem_get_room_name(lem, str);
 	room2 = lem_get_room_name(lem, tmp + 1);
 	if (room1 == NULL || room2 == NULL)
-	{
-		ft_strdel(&str);
 		error_exit(lem);
-	}
 	room_add_connections(lem, room1, room2->index);
 	room_add_connections(lem, room2, room1->index);
 	*tmp = '-';
@@ -69,6 +66,9 @@ static void	add_room(t_lem *lem, char *str, int *flag, int index)
 	room.x = ft_atoi(split[1]);
 	room.y = ft_atoi(split[2]);
 	room.flag = *flag;
+	if ((*flag == LEM_START && lem->start != -1) ||
+		(*flag == LEM_END && lem->end != -1))
+		error_exit(lem);
 	*flag = 0;
 	ft_strdel(&split[1]);
 	ft_strdel(&split[2]);
@@ -100,13 +100,28 @@ static void	parse_rooms(t_lem *lem)
 }
 
 /*
-** TODO: Handle comments before nb_ant
+** TODO: Handle comments before nb_ant and if ants is negative
 */
 
 void		parse_lemin(t_lem *lem)
 {
-	if (get_next_line(lem->fd, &lem->line) != 1 || !ft_strisnumber(lem->line))
-		error_exit(NULL);
+	int	ret;
+
+	while ((ret = get_next_line(lem->fd, &lem->line)) == 1)
+	{
+		if (!ft_strisnumber(lem->line) && lem->line[0] != '#')
+			break ;
+		else if (ft_strisnumber(lem->line))
+		{
+			if (lem->line[0] == '-')
+				error_exit(lem);
+			lem->ant_count = ft_atol(lem->line);
+			break ;
+		}
+		ft_strdel(&lem->line);
+	}
+	if (ret == -1)
+		error_exit(lem);
 	lem->ant_count = ft_atol(lem->line);
 	ft_strdel(&lem->line);
 	parse_rooms(lem);

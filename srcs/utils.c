@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:43:10 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 17:01:34 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 17:29:26 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ void		print_path(t_lem *lem, t_paths path)
 	while (i - 1 < path[0])
 	{
 		ft_printf("%s", lem->rooms[(path[i] & NO_FLAG)].name);
-		if (path[i] & REVERSE_FLAG)
-			ft_printf("(uc)");
 		if (i != path[0])
 			ft_printf("->");
 		i++;

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:15:56 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/01/19 18:04:37 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 17:09:53 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,20 @@ int		is_valid_room_format(char *str)
 	if (*str == 'L' || ft_strcountchar(str, ' ') != 2)
 		return (0);
 	while (*str != ' ')
+	{
+		if (*str == '-')
+			return (0);
 		str++;
-	str += (*str == '-' || *str == '+') + 1;
+	}
+	str++;
+	if (*str == '-' || *str == '+')
+		str++;
 	while (*str != ' ')
 		if (!ft_isdigit(*str++))
 			return (0);
-	str += (*str == '-' || *str == '+') + 1;
+	str++;
+	if (*str == '-' || *str == '+')
+		str++;
 	while (*str)
 		if (!ft_isdigit(*str++))
 			return (0);

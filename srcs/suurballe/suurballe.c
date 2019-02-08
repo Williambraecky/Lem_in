@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:17:26 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/08 16:08:44 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 17:15:53 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ static int	should_continue(t_lem *lem)
 	size_t	copy_lines;
 	size_t	path_lines;
 
+	if (lem->paths && lem->paths[0][0] == 2)
+		return (0);
 	if (lem->max_paths && lem->nb_paths >= (size_t)lem->max_paths)
 		return (0);
 	copy_lines = calc_needed_lines(lem, lem->copy, lem->copy_len);

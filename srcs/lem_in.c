@@ -6,15 +6,11 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/08 15:50:51 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 17:23:47 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-/*
-** PROTOTYPE
-*/
 
 static int	move_ants_on_path(t_lem *lem, t_paths path, int force, size_t line)
 {
@@ -41,6 +37,10 @@ static int	move_ants_on_path(t_lem *lem, t_paths path, int force, size_t line)
 	}
 	return (ret);
 }
+
+/*
+** TODO: handle when start and end are connected
+*/
 
 static void	move_ants(t_lem *lem)
 {
@@ -77,7 +77,7 @@ static void	show_info(t_lem *lem)
 
 	if (!(lem->flags & SHOW_FLAG))
 		return ;
-	ft_printf("Number of paths: %zu\n", lem->nb_paths);
+	ft_printf("\nNumber of paths: %zu\n", lem->nb_paths);
 	ft_printf("Number of ants: %zu\n\n", lem->ant_count);
 	i = 0;
 	while (i < lem->nb_paths)
@@ -91,6 +91,25 @@ static void	show_info(t_lem *lem)
 		calc_needed_lines(lem, lem->paths, lem->nb_paths));
 }
 
+static void	start_lemin(t_lem *lem)
+{
+	parse_lemin(lem);
+	if (!lem_is_valid(lem))
+		error_exit(lem);
+	buffer_flush();
+	suurballe(lem);
+	if (!lem->paths)
+		error_exit(lem);
+	sort_paths(lem->paths, lem->nb_paths);
+	show_info(lem);
+	lem->current_lines = calc_needed_lines(lem, lem->paths, lem->nb_paths);
+	buffer_putchar('\n');
+	if (!(lem->flags & HIDE_FLAG))
+		move_ants(lem);
+	buffer_flush();
+	free_lem(lem);
+}
+
 int			main(int argc, char **argv)
 {
 	t_lem	lem;
@@ -98,7 +117,6 @@ int			main(int argc, char **argv)
 	(void)argv;
 	ft_memset(&lem, 0, sizeof(lem));
 	read_lem_opt(&lem, argc, argv);
-	ft_printf("post options\n");
 	if (!lem.algo)
 		lem.algo = bfs;
 	if (isatty(lem.fd))
@@ -109,19 +127,6 @@ int			main(int argc, char **argv)
 	lem.mode = argc == 1;
 	lem.start = -1;
 	lem.end = -1;
-	parse_lemin(&lem);
-	if (!lem_is_valid(&lem))
-		error_exit(&lem);
-	buffer_putchar('\n');
-	buffer_flush();
-	suurballe(&lem);
-	sort_paths(lem.paths, lem.nb_paths);
-	show_info(&lem);
-	lem.current_lines = calc_needed_lines(&lem, lem.paths, lem.nb_paths);
-	buffer_putchar('\n');
-	if (!(lem.flags & HIDE_FLAG))
-		move_ants(&lem);
-	buffer_flush();
-	free_lem(&lem);
+	start_lemin(&lem);
 	return (0);
 }
