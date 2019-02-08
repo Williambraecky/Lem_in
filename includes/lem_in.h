@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 17:00:00 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 16:09:38 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ struct		s_lem
 	size_t	nb_rooms;
 	t_paths	*paths;
 	size_t	nb_paths;
+	t_paths	*copy;
+	size_t	copy_len;
 	size_t	ant_count;
 	size_t	current_lines;
 	int		start;
@@ -116,7 +118,8 @@ void		print_path(t_lem *lem, t_paths path);
 int			calc_max_output(t_lem *lem);
 int			path_collide(t_paths path1, t_paths path2);
 void		move_ant(t_lem *lem, t_room *from, t_room *to);
-size_t		compute_bandwidth(t_lem *lem, size_t nb_lines);
+size_t		compute_bandwidth(t_paths *paths, size_t len,
+	size_t nb_lines);
 size_t		simple_hash(char *str);
 void		sort_paths(t_paths *paths, size_t nb_paths);
 void		reset_room_used(t_lem *lem);
@@ -127,12 +130,12 @@ void		prepare_map(t_lem *lem);
 void		suurballe(t_lem *lem);
 void		normalize_path(t_paths path);
 int			is_path_clean(t_paths path);
-t_paths		handle_conflict(t_lem *lem, t_paths path, int path_index);
+t_paths		handle_conflict(t_lem *lem, t_paths path);
 t_paths		join_paths(t_lem *lem, t_paths first,
 	t_paths second, int join_room);
 t_paths		join_paths2(t_lem *lem, t_paths first,
 	t_paths second, int join_room);
-size_t		calc_needed_lines(t_lem *lem);
+size_t		calc_needed_lines(t_lem *lem, t_paths *paths, size_t len);
 void		create_hash_table(t_lem *lem);
 int			calc_len(t_paths path);
 int			cmp_path(t_paths *a, t_paths *b);
@@ -142,6 +145,8 @@ void		read_lem_opt(t_lem *lem, int argc, char **argv);
 void		error_usage(t_lem *lem);
 void		error_message(t_lem *lem, char *msg);
 void		read_dictionary(t_lem *lem, int *i, char **argv);
+void		free_copy(t_lem *lem);
+void		free_paths(t_lem *lem);
 
 /*
 ** Free

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 21:52:35 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 17:25:13 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 16:11:19 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ static void		lstsortinsert(t_list **begin_list, t_list *insert,
 		insert->next = current != NULL ? current->next : NULL;
 		if (!current)
 			*begin_list = insert;
-		else
-			ft_printf("COUCOU\n");
 		return ;
 	}
 	prev = current;
@@ -40,6 +38,7 @@ static void		lstsortinsert(t_list **begin_list, t_list *insert,
 		prev = current;
 	}
 	prev->next = insert;
+	begin_list[1] = insert;
 }
 
 static void		add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
@@ -54,7 +53,19 @@ static void		add_new_path(t_lem *lem, t_list **list, t_paths path, int index)
 		error_exit(lem);
 		return ;
 	}
-	lstsortinsert(list, new_node, cmp_path);
+	if (!list[0])
+	{
+		list[0] = new_node;
+		list[1] = new_node;
+	}
+	else if (list[1] && cmp_path((t_paths*)list[1]->content,
+		(t_paths*)new_node->content) <= 0)
+	{
+		list[1]->next = new_node;
+		list[1] = new_node;
+	}
+	else
+		lstsortinsert(list, new_node, cmp_path);
 }
 
 static int		should_follow(t_paths path, t_room *check, t_room *from)
@@ -113,7 +124,7 @@ t_paths			reverse_bfs(t_lem *lem)
 	while (*paths && !found)
 	{
 		current = (t_paths)*((void**)paths[0]->content);
-		if (lem->autonomy != 0 && calc_len(current) - 1 > lem->autonomy)
+		if (lem->autonomy != 0 && calc_len(current) >= lem->autonomy)
 			break ;
 		found = add_new_paths(lem, paths, current,
 			&lem->rooms[(current[*current] & NO_FLAG)]);

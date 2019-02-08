@@ -6,11 +6,27 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:53:44 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 17:13:16 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 15:49:50 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void		free_copy(t_lem *lem)
+{
+	size_t i;
+
+	if (!lem->copy)
+		return ;
+	i = 0;
+	while (i < lem->copy_len)
+	{
+		ft_memdel((void**)&(lem->copy[i]));
+		i++;
+	}
+	ft_memdel((void**)&lem->copy);
+	lem->copy_len = 0;
+}
 
 static void	free_rooms(t_lem *lem)
 {
@@ -29,7 +45,7 @@ static void	free_rooms(t_lem *lem)
 	ft_memdel((void**)&(lem->rooms));
 }
 
-static void	free_paths(t_lem *lem)
+void		free_paths(t_lem *lem)
 {
 	size_t	i;
 
@@ -65,4 +81,6 @@ void		free_lem(t_lem *lem)
 		free_dictionary(lem);
 	if (lem && lem->line)
 		ft_strdel(&lem->line);
+	if (lem && lem->copy)
+		free_copy(lem);
 }

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 16:05:03 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 13:35:20 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 15:00:30 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static t_paths	remove_conflict(t_lem *lem, t_paths *path,
 	return (new2);
 }
 
-t_paths			handle_conflict(t_lem *lem, t_paths path, int path_index)
+t_paths			handle_conflict(t_lem *lem, t_paths path)
 {
 	t_paths	new;
 	size_t	conflict_path;
@@ -82,11 +82,7 @@ t_paths			handle_conflict(t_lem *lem, t_paths path, int path_index)
 	if (conflict_path == lem->nb_paths)
 		return (path);
 	new = remove_conflict(lem, &path, lem->paths[conflict_path], index);
-	if (path_index != -1)
-		lem->paths[path_index] = new;
 	free(lem->paths[conflict_path]);
 	lem->paths[conflict_path] = new;
-	if (!is_path_clean(new))
-		lem->paths[conflict_path] = handle_conflict(lem, new, conflict_path);
 	return (path);
 }

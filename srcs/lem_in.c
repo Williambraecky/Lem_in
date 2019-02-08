@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 17:51:27 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 15:50:51 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ static void	show_info(t_lem *lem)
 		ft_putchar('\n');
 		i++;
 	}
-	ft_printf("Needed lines: %zu\n", calc_needed_lines(lem));
+	ft_printf("Needed lines: %zu\n",
+		calc_needed_lines(lem, lem->paths, lem->nb_paths));
 }
 
 int			main(int argc, char **argv)
@@ -97,6 +98,7 @@ int			main(int argc, char **argv)
 	(void)argv;
 	ft_memset(&lem, 0, sizeof(lem));
 	read_lem_opt(&lem, argc, argv);
+	ft_printf("post options\n");
 	if (!lem.algo)
 		lem.algo = bfs;
 	if (isatty(lem.fd))
@@ -105,10 +107,6 @@ int			main(int argc, char **argv)
 		return (0);
 	}
 	lem.mode = argc == 1;
-	if (lem.mode)
-		lem.algo = bfs;
-	else
-		lem.algo = reverse_bfs;
 	lem.start = -1;
 	lem.end = -1;
 	parse_lemin(&lem);
@@ -119,7 +117,7 @@ int			main(int argc, char **argv)
 	suurballe(&lem);
 	sort_paths(lem.paths, lem.nb_paths);
 	show_info(&lem);
-	lem.current_lines = calc_needed_lines(&lem);
+	lem.current_lines = calc_needed_lines(&lem, lem.paths, lem.nb_paths);
 	buffer_putchar('\n');
 	if (!(lem.flags & HIDE_FLAG))
 		move_ants(&lem);

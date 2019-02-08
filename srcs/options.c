@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 15:06:05 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/07 17:15:21 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/08 15:48:42 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	read_map(t_lem *lem, int *i, char **argv)
 {
 	(*i)++;
-	if (lem->fd)
+	if (!isatty(lem->fd) || lem->fd)
 		error_message(lem, "Can only specify one map");
 	if ((lem->fd = open(argv[*i], O_RDONLY)) == -1)
 		error_message(lem, "Can not open file");
