@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 15:06:05 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/08 15:48:42 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/11 13:07:57 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void		read_lem_opt(t_lem *lem, int argc, char **argv)
 			read_max_paths(lem, &i, argv);
 		else if (ft_strequ(argv[i], "-m") && i + 1 < argc)
 			read_map(lem, &i, argv);
-		else if (ft_strequ(argv[i], "-v") && i++)
-			lem->flags |= VERBOSE_FLAG;
 		else if (ft_strequ(argv[i], "-s") && i++)
 			lem->flags |= SHOW_FLAG;
 		else if (ft_strequ(argv[i], "-h") && i++)

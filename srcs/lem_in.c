@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:34:27 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/08 17:23:47 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/11 13:14:55 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ static void	move_ants(t_lem *lem)
 		line++;
 		buffer_putchar('\n');
 	}
-	buffer_putnbr(line);
-	buffer_putchar('\n');
 }
 
 static void	show_info(t_lem *lem)
@@ -124,7 +122,6 @@ int			main(int argc, char **argv)
 		error_message(&lem, "No map specified!");
 		return (0);
 	}
-	lem.mode = argc == 1;
 	lem.start = -1;
 	lem.end = -1;
 	start_lemin(&lem);

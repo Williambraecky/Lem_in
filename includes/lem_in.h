@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 13:33:23 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/02/08 16:09:38 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/02/11 13:07:45 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ struct		s_lem
 	int		fd;
 	int		autonomy;
 	int		max_paths;
-	int		mode;
 	int		flags;
 	char	*line;
 	char	**dictionary;
